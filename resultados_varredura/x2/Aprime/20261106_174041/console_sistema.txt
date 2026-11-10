@@ -1,0 +1,86 @@
+db-init-1  | psql: error: connection to server at "postgres" (172.18.0.2), port 5432 failed: Connection refused
+db-init-1  | 	Is the server running on that host and accepting TCP/IP connections?
+db-init-1  | psql: error: connection to server at "postgres" (172.18.0.2), port 5432 failed: FATAL:  the database system is starting up
+db-init-1  | CREATE TABLE
+db-init-1  | CREATE INDEX
+db-init-1   | CREATE INDEX
+db-init-1   | CREATE TABLE
+postgres-1  | The files belonging to this database system will be owned by user "postgres".
+postgres-1  | This user must also own the server process.
+postgres-1  | 
+postgres-1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres-1  | The default database encoding has accordingly been set to "UTF8".
+postgres-1  | The default text search configuration will be set to "english".
+postgres-1  | 
+postgres-1  | Data page checksums are disabled.
+postgres-1  | 
+postgres-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres-1  | creating subdirectories ... ok
+postgres-1  | selecting dynamic shared memory implementation ... posix
+postgres-1  | selecting default max_connections ... 100
+postgres-1  | selecting default shared_buffers ... 128MB
+postgres-1  | selecting default time zone ... UTC
+postgres-1  | creating configuration files ... ok
+postgres-1  | running bootstrap script ... ok
+postgres-1  | sh: locale: not found
+postgres-1  | 2026-11-06 20:40:46.568 UTC [35] WARNING:  no usable system locales were found
+postgres-1  | performing post-bootstrap initialization ... ok
+postgres-1  | syncing data to disk ... ok
+postgres-1  | 
+postgres-1  | 
+postgres-1  | Success. You can now start the database server using:
+postgres-1  | 
+postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres-1  | 
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1  | waiting for server to start....2026-11-06 20:40:52.767 UTC [47] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 20:40:52.768 UTC [47] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 20:40:52.772 UTC [50] LOG:  database system was shut down at 2026-11-06 20:40:50 UTC
+postgres-1  | 2026-11-06 20:40:52.776 UTC [47] LOG:  database system is ready to accept connections
+postgres-1  |  done
+postgres-1  | server started
+postgres-1  | 2026-11-06 20:40:53.369 UTC [64] FATAL:  database "telemetria" does not exist
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres-1  | 
+postgres-1  | waiting for server to shut down....2026-11-06 20:40:53.772 UTC [47] LOG:  received fast shutdown request
+postgres-1  | 2026-11-06 20:40:53.772 UTC [47] LOG:  aborting any active transactions
+postgres-1  | 2026-11-06 20:40:53.866 UTC [47] LOG:  background worker "logical replication launcher" (PID 53) exited with exit code 1
+postgres-1  | 2026-11-06 20:40:53.867 UTC [48] LOG:  shutting down
+postgres-1  | 2026-11-06 20:40:53.868 UTC [48] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-11-06 20:40:54.577 UTC [48] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.108 s, sync=0.597 s, total=0.711 s; sync files=301, longest=0.067 s, average=0.002 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D60, redo lsn=0/1925D60
+postgres-1  | 2026-11-06 20:40:54.667 UTC [47] LOG:  database system is shut down
+postgres-1  |  done
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-11-06 20:40:54.776 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 20:40:54.776 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-11-06 20:40:54.776 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-11-06 20:40:54.778 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 20:40:54.868 UTC [70] LOG:  database system was shut down at 2026-11-06 20:40:54 UTC
+postgres-1  | 2026-11-06 20:40:54.868 UTC [71] FATAL:  the database system is starting up
+postgres-1  | 2026-11-06 20:40:54.967 UTC [1] LOG:  database system is ready to accept connections
+postgres-1  | 2026-11-06 20:41:33.802 UTC [119] LOG:  PID 117 in cancel request did not match any process
+postgres-1  | 2026-11-06 20:41:36.967 UTC [132] LOG:  PID 118 in cancel request did not match any process
+postgres-1  | 2026-11-06 20:42:35.002 UTC [245] LOG:  PID 243 in cancel request did not match any process
+postgres-1  | 2026-11-06 20:42:40.202 UTC [249] LOG:  PID 237 in cancel request did not match any process
+postgres-1  | 2026-11-06 20:42:40.203 UTC [250] LOG:  PID 237 in cancel request did not match any process
+sistema-monolito-1  | 2026/11/06 20:40:56 servico de telemetria ouvindo em :8080
+sistema-monolito-1  | 2026/11/06 20:41:33 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100083: context canceled
+sistema-monolito-1  | 2026/11/06 20:41:36 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000264: context canceled
+sistema-monolito-1  | 2026/11/06 20:41:36 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100133: context canceled
+sistema-monolito-1  | 2026/11/06 20:41:40 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000295: context canceled
+sistema-monolito-1  | 2026/11/06 20:41:42 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000306: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:06 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100367: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:08 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100386: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:08 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000516: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:14 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000566: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:30 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100492: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:30 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100499: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:43 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000792: context canceled
+sistema-monolito-1  | 2026/11/06 20:42:43 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000798: context canceled

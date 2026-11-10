@@ -1,0 +1,958 @@
+wait-app-1  | Aguardando a aplicacao em http://aps-app:8080/health ...
+wait-app-1  | Aplicacao pronta.
+stress-test-1  | 
+avaliador-notas-1  | 
+avaliador-notas-1  | ==============================================
+avaliador-notas-1  | RESULTADO DA AVALIACAO
+stress-test-1      |           /\      |‾‾| /‾‾/   /‾‾/   
+stress-test-1      |      /\  /  \     |  |/  /   /  /    
+avaliador-notas-1  | ==============================================
+avaliador-notas-1  | 
+avaliador-notas-1  | INGESTAO (POST /telemetria)
+avaliador-notas-1  |   Aceitas:      13498  (100.00%)
+avaliador-notas-1  |   Perdidas:         0  (0.00%)
+avaliador-notas-1  |   Total:        13498
+avaliador-notas-1  | 
+stress-test-1      |     /  \/    \    |     (   /   ‾‾\  
+stress-test-1      |    /          \   |  |\  \ |  (‾)  | 
+stress-test-1      |   / __________ \  |__| \__\ \_____/ .io
+avaliador-notas-1  | CONSULTA (GET /indice-calor)
+avaliador-notas-1  |   Aceitas:     168085  (100.00%)
+avaliador-notas-1  |   Perdidas:         0  (0.00%)
+avaliador-notas-1  |   Total:       168085
+avaliador-notas-1  |   Sem dado:        52
+avaliador-notas-1  | 
+avaliador-notas-1  | REGISTROS
+avaliador-notas-1  |   Enviados:    475761
+avaliador-notas-1  |   Rejeitados:       0  (0.00%)
+avaliador-notas-1  |   Gravados:    475761  (100.00%)
+avaliador-notas-1  | 
+avaliador-notas-1  | ==============================================
+avaliador-notas-1  | TAXA DE PERSISTENCIA: 100.00%  (gravados / enviados)
+avaliador-notas-1  | NOTA (proporcional):  10.00 / 10.00
+avaliador-notas-1  | ==============================================
+avaliador-notas-1  | 
+stress-test-1      | 
+stress-test-1      |      execution: local
+stress-test-1      |         script: script.js
+stress-test-1      |         output: json (resultados/CenarioB/20261106_183614/stream.json)
+stress-test-1      | 
+stress-test-1      |      scenarios: (100.00%) 4 scenarios, 2600 max VUs, 2m55s max duration (incl. graceful stop):
+stress-test-1      |               * escrita_base: 64.00 iterations/s for 2m10s (maxVUs: 30-200, gracefulStop: 30s)
+stress-test-1      |               * leitura_base: 800.00 iterations/s for 2m10s (maxVUs: 50-800, startTime: 15s, gracefulStop: 30s)
+stress-test-1      |               * pico_escrita: Up to 192.00 iterations/s for 1m10s over 11 stages (maxVUs: 30-600, startTime: 23s, gracefulStop: 30s)
+stress-test-1      |               * pico_leitura: Up to 2400.00 iterations/s for 1m10s over 11 stages (maxVUs: 50-1000, startTime: 30s, gracefulStop: 30s)
+stress-test-1      | 
+stress-test-1      | 
+stress-test-1      | running (0m01.0s), 0000/0160 VUs, 64 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   1% ] 000/030 VUs  0m01.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      14.0s         
+avaliador-notas-1  | INTEGRIDADE (cruzamento manifesto x API)
+avaliador-notas-1  |   Divergentes: 0 | Fantasmas: 0 | Perdidas: 0 | Duplicatas: 0
+avaliador-notas-1  |   Coletadas:   475761 | Medicoes: 475761 | Indices: 475761
+avaliador-notas-1  |   Consistencia entre tabelas: OK
+stress-test-1      | pico_escrita • [   0% ] waiting      22.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      29.0s         
+stress-test-1      | 
+stress-test-1      | running (0m02.0s), 0000/0160 VUs, 128 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   2% ] 000/030 VUs  0m02.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      13.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      21.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      28.0s         
+stress-test-1      | 
+stress-test-1      | running (0m03.0s), 0000/0160 VUs, 192 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   2% ] 000/030 VUs  0m03.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      12.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      20.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      27.0s         
+stress-test-1      | 
+stress-test-1      | running (0m04.0s), 0000/0160 VUs, 256 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   3% ] 000/030 VUs  0m04.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      11.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      19.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      26.0s         
+stress-test-1      | 
+stress-test-1      | running (0m05.0s), 0000/0160 VUs, 320 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   4% ] 000/030 VUs  0m05.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      10.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      18.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      25.0s         
+stress-test-1      | 
+stress-test-1      | running (0m06.0s), 0000/0160 VUs, 384 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   5% ] 000/030 VUs  0m06.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      09.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      17.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      24.0s         
+stress-test-1      | 
+stress-test-1      | running (0m07.0s), 0000/0160 VUs, 448 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   5% ] 000/030 VUs  0m07.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      08.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      16.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      23.0s         
+stress-test-1      | 
+stress-test-1      | running (0m08.0s), 0000/0160 VUs, 512 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   6% ] 000/030 VUs  0m08.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      07.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      15.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      22.0s         
+stress-test-1      | 
+stress-test-1      | running (0m09.0s), 0000/0160 VUs, 576 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   7% ] 000/030 VUs  0m09.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      06.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      14.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      21.0s         
+stress-test-1      | 
+stress-test-1      | running (0m10.0s), 0000/0160 VUs, 640 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   8% ] 000/030 VUs  0m10.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      05.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      13.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      20.0s         
+stress-test-1      | 
+stress-test-1      | running (0m11.0s), 0000/0160 VUs, 704 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   8% ] 000/030 VUs  0m11.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      04.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      12.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      19.0s         
+stress-test-1      | 
+stress-test-1      | running (0m12.0s), 0000/0160 VUs, 768 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [   9% ] 000/030 VUs  0m12.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      03.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      11.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      18.0s         
+stress-test-1      | 
+stress-test-1      | running (0m13.0s), 0000/0160 VUs, 832 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  10% ] 000/030 VUs  0m13.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      02.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      10.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      17.0s         
+stress-test-1      | 
+stress-test-1      | running (0m14.0s), 0000/0160 VUs, 896 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  11% ] 000/030 VUs  0m14.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      01.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      09.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      16.0s         
+stress-test-1      | 
+stress-test-1      | running (0m15.0s), 0002/0160 VUs, 958 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  12% ] 002/030 VUs  0m15.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base • [   0% ] waiting      00.0s         
+stress-test-1      | pico_escrita • [   0% ] waiting      08.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      15.0s         
+stress-test-1      | 
+stress-test-1      | running (0m16.0s), 0002/0160 VUs, 1816 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  12% ] 000/030 VUs  0m16.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   1% ] 002/050 VUs  0m01.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      07.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      14.0s         
+stress-test-1      | 
+stress-test-1      | running (0m17.0s), 0001/0160 VUs, 2681 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  13% ] 000/030 VUs  0m17.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   2% ] 001/050 VUs  0m02.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      06.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      13.0s         
+stress-test-1      | 
+stress-test-1      | running (0m18.0s), 0002/0160 VUs, 3544 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  14% ] 000/030 VUs  0m18.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   2% ] 002/050 VUs  0m03.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      05.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      12.0s         
+stress-test-1      | 
+stress-test-1      | running (0m19.0s), 0001/0160 VUs, 4409 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  15% ] 000/030 VUs  0m19.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   3% ] 001/050 VUs  0m04.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      04.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      11.0s         
+stress-test-1      | 
+stress-test-1      | running (0m20.0s), 0001/0169 VUs, 5263 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  15% ] 000/030 VUs  0m20.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   4% ] 001/059 VUs  0m05.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      03.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      10.0s         
+stress-test-1      | 
+stress-test-1      | running (0m21.0s), 0001/0169 VUs, 6127 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  16% ] 000/030 VUs  0m21.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   5% ] 001/059 VUs  0m06.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      02.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      09.0s         
+stress-test-1      | 
+stress-test-1      | running (0m22.0s), 0001/0169 VUs, 6991 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  17% ] 000/030 VUs  0m22.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   5% ] 001/059 VUs  0m07.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      01.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      08.0s         
+stress-test-1      | 
+stress-test-1      | running (0m23.0s), 0001/0169 VUs, 7855 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  18% ] 000/030 VUs  0m23.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   6% ] 001/059 VUs  0m08.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita • [   0% ] waiting      00.0s         
+stress-test-1      | pico_leitura • [   0% ] waiting      07.0s         
+stress-test-1      | 
+stress-test-1      | running (0m24.0s), 0001/0169 VUs, 8741 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  18% ] 000/030 VUs  0m24.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   7% ] 001/059 VUs  0m09.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [   1% ] 000/030 VUs  0m01.0s/1m10s  047.49 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      06.0s         
+stress-test-1      | 
+stress-test-1      | running (0m25.0s), 0001/0169 VUs, 9678 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  19% ] 000/030 VUs  0m25.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   8% ] 001/059 VUs  0m10.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [   3% ] 000/030 VUs  0m02.0s/1m10s  095.75 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      05.0s         
+stress-test-1      | 
+stress-test-1      | running (0m26.0s), 0001/0170 VUs, 10641 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  20% ] 000/030 VUs  0m26.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   8% ] 001/060 VUs  0m11.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [   4% ] 000/030 VUs  0m03.0s/1m10s  105.48 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      04.0s         
+stress-test-1      | 
+stress-test-1      | running (0m27.0s), 0001/0170 VUs, 11616 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  21% ] 000/030 VUs  0m27.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [   9% ] 001/060 VUs  0m12.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [   6% ] 000/030 VUs  0m04.0s/1m10s  115.14 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      03.0s         
+stress-test-1      | 
+stress-test-1      | running (0m28.0s), 0001/0170 VUs, 12599 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  22% ] 000/030 VUs  0m28.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  10% ] 001/060 VUs  0m13.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [   7% ] 001/030 VUs  0m05.0s/1m10s  124.75 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      02.0s         
+stress-test-1      | 
+stress-test-1      | running (0m29.0s), 0001/0170 VUs, 13593 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  22% ] 000/030 VUs  0m29.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  11% ] 001/060 VUs  0m14.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [   9% ] 000/030 VUs  0m06.0s/1m10s  134.31 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      01.0s         
+stress-test-1      | time="2026-11-06T21:37:03Z" level=warning msg="The test has generated metrics with 100687 unique time series, which is higher than the suggested limit of 100000 and could cause high memory usage. Consider not using high-cardinality values like unique IDs as metric tags or, if you need them in the URL, use the name metric tag or URL grouping. See https://grafana.com/docs/k6/latest/using-k6/tags-and-groups/ for details." component=metrics-engine-ingester
+stress-test-1      | 
+stress-test-1      | running (0m30.0s), 0000/0170 VUs, 14596 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  23% ] 000/030 VUs  0m30.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  12% ] 001/060 VUs  0m15.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  10% ] 000/030 VUs  0m07.0s/1m10s  143.90 iters/s
+stress-test-1      | pico_leitura • [   0% ] waiting      00.0s         
+stress-test-1      | 
+stress-test-1      | running (0m31.0s), 0001/0173 VUs, 15900 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  24% ] 000/030 VUs    0m31.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  12% ] 001/063 VUs    0m16.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  11% ] 000/030 VUs    0m08.0s/1m10s  153.52 iters/s
+stress-test-1      | pico_leitura   [   1% ] 0000/0050 VUs  0m01.0s/1m10s  0594.47 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m32.0s), 0000/0173 VUs, 17816 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  25% ] 000/030 VUs    0m32.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  13% ] 001/063 VUs    0m17.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  13% ] 000/030 VUs    0m09.0s/1m10s  163.10 iters/s
+stress-test-1      | pico_leitura   [   3% ] 0001/0050 VUs  0m02.0s/1m10s  1194.74 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m33.0s), 0001/0173 VUs, 20106 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  25% ] 000/030 VUs    0m33.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  14% ] 001/063 VUs    0m18.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  14% ] 000/030 VUs    0m10.0s/1m10s  172.71 iters/s
+stress-test-1      | pico_leitura   [   4% ] 0002/0050 VUs  0m03.0s/1m10s  1318.95 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m34.0s), 0001/0173 VUs, 22527 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  26% ] 000/030 VUs    0m34.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  15% ] 000/063 VUs    0m19.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  16% ] 001/030 VUs    0m11.0s/1m10s  182.33 iters/s
+stress-test-1      | pico_leitura   [   6% ] 0000/0050 VUs  0m04.0s/1m10s  1438.88 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m35.0s), 0004/0173 VUs, 25076 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  27% ] 000/030 VUs    0m35.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  15% ] 002/063 VUs    0m20.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  17% ] 000/030 VUs    0m12.0s/1m10s  191.92 iters/s
+stress-test-1      | pico_leitura   [   7% ] 0002/0050 VUs  0m05.0s/1m10s  1558.96 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m36.0s), 0000/0213 VUs, 27658 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  28% ] 000/030 VUs    0m36.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  16% ] 001/064 VUs    0m21.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  19% ] 000/030 VUs    0m13.0s/1m10s  096.50 iters/s
+stress-test-1      | pico_leitura   [   9% ] 0002/0089 VUs  0m06.0s/1m10s  1678.96 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m37.0s), 0002/0213 VUs, 30307 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  28% ] 001/030 VUs    0m37.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  17% ] 001/064 VUs    0m22.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  20% ] 000/030 VUs    0m14.0s/1m10s  006.93 iters/s
+stress-test-1      | pico_leitura   [  10% ] 0002/0089 VUs  0m07.0s/1m10s  1798.90 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m38.0s), 0005/0213 VUs, 33030 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  29% ] 000/030 VUs    0m38.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  18% ] 001/064 VUs    0m23.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  21% ] 000/030 VUs    0m15.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  11% ] 0004/0089 VUs  0m08.0s/1m10s  1918.90 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m39.0s), 0003/0213 VUs, 35876 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  30% ] 000/030 VUs    0m39.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  18% ] 001/064 VUs    0m24.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  23% ] 000/030 VUs    0m16.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  13% ] 0002/0089 VUs  0m09.0s/1m10s  2038.97 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m40.0s), 0013/0219 VUs, 38820 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  31% ] 000/030 VUs    0m40.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  19% ] 004/064 VUs    0m25.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  24% ] 000/030 VUs    0m17.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  14% ] 0009/0095 VUs  0m10.0s/1m10s  2158.92 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m41.0s), 0103/0501 VUs, 41375 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  32% ] 003/030 VUs    0m41.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  20% ] 028/137 VUs    0m26.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  26% ] 000/030 VUs    0m18.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  16% ] 0074/0304 VUs  0m11.0s/1m10s  2278.92 iters/s
+stress-test-1      | time="2026-11-06T21:37:16Z" level=warning msg="The test has generated metrics with 200138 unique time series, which is higher than the suggested limit of 100000 and could cause high memory usage. Consider not using high-cardinality values like unique IDs as metric tags or, if you need them in the URL, use the name metric tag or URL grouping. See https://grafana.com/docs/k6/latest/using-k6/tags-and-groups/ for details." component=metrics-engine-ingester
+stress-test-1      | 
+stress-test-1      | running (0m42.0s), 0247/0541 VUs, 44367 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  32% ] 005/030 VUs    0m42.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  21% ] 063/138 VUs    0m27.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  27% ] 000/030 VUs    0m19.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  17% ] 0179/0343 VUs  0m12.0s/1m10s  2398.92 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m43.0s), 0002/0571 VUs, 47242 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  33% ] 000/030 VUs    0m43.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  22% ] 001/142 VUs    0m28.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  29% ] 000/030 VUs    0m20.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  19% ] 0001/0369 VUs  0m13.0s/1m10s  1210.45 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m44.0s), 0001/0571 VUs, 48717 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  34% ] 000/030 VUs    0m44.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  22% ] 001/142 VUs    0m29.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  30% ] 000/030 VUs    0m21.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  20% ] 0000/0369 VUs  0m14.0s/1m10s  0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m45.0s), 0001/0571 VUs, 49582 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  35% ] 000/030 VUs    0m45.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  23% ] 001/142 VUs    0m30.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  31% ] 000/030 VUs    0m22.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  21% ] 0000/0369 VUs  0m15.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m46.0s), 0001/0571 VUs, 50446 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  35% ] 000/030 VUs    0m46.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  24% ] 001/142 VUs    0m31.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  33% ] 000/030 VUs    0m23.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  23% ] 0000/0369 VUs  0m16.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m47.0s), 0001/0571 VUs, 51310 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  36% ] 000/030 VUs    0m47.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  25% ] 001/142 VUs    0m32.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  34% ] 000/030 VUs    0m24.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  24% ] 0000/0369 VUs  0m17.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m48.0s), 0001/0571 VUs, 52174 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  37% ] 000/030 VUs    0m48.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  25% ] 001/142 VUs    0m33.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  36% ] 000/030 VUs    0m25.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  26% ] 0000/0369 VUs  0m18.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m49.0s), 0001/0571 VUs, 53038 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  38% ] 000/030 VUs    0m49.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  26% ] 001/142 VUs    0m34.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  37% ] 000/030 VUs    0m26.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  27% ] 0000/0369 VUs  0m19.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m50.0s), 0001/0571 VUs, 53902 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  38% ] 000/030 VUs    0m50.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  27% ] 001/142 VUs    0m35.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  39% ] 000/030 VUs    0m27.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  29% ] 0000/0369 VUs  0m20.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m51.0s), 0001/0571 VUs, 54766 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  39% ] 000/030 VUs    0m51.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  28% ] 001/142 VUs    0m36.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  40% ] 000/030 VUs    0m28.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  30% ] 0000/0369 VUs  0m21.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m52.0s), 0001/0571 VUs, 55653 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  40% ] 000/030 VUs    0m52.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  28% ] 001/142 VUs    0m37.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  41% ] 000/030 VUs    0m29.0s/1m10s  047.49 iters/s
+stress-test-1      | pico_leitura   [  31% ] 0000/0369 VUs  0m22.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m53.0s), 0000/0571 VUs, 56589 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  41% ] 000/030 VUs    0m53.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  29% ] 001/142 VUs    0m38.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  43% ] 000/030 VUs    0m30.0s/1m10s  095.75 iters/s
+stress-test-1      | pico_leitura   [  33% ] 0000/0369 VUs  0m23.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m54.0s), 0001/0571 VUs, 57553 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  42% ] 000/030 VUs    0m54.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  30% ] 001/142 VUs    0m39.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  44% ] 000/030 VUs    0m31.0s/1m10s  105.48 iters/s
+stress-test-1      | pico_leitura   [  34% ] 0000/0369 VUs  0m24.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m55.0s), 0001/0571 VUs, 58527 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  42% ] 000/030 VUs    0m55.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  31% ] 001/142 VUs    0m40.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  46% ] 001/030 VUs    0m32.0s/1m10s  115.14 iters/s
+stress-test-1      | pico_leitura   [  36% ] 0000/0369 VUs  0m25.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m56.0s), 0001/0571 VUs, 59511 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  43% ] 000/030 VUs    0m56.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  32% ] 000/142 VUs    0m41.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  47% ] 001/030 VUs    0m33.0s/1m10s  124.75 iters/s
+stress-test-1      | pico_leitura   [  37% ] 0000/0369 VUs  0m26.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m57.0s), 0002/0571 VUs, 60504 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  44% ] 000/030 VUs    0m57.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  32% ] 002/142 VUs    0m42.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  49% ] 000/030 VUs    0m34.0s/1m10s  134.31 iters/s
+stress-test-1      | pico_leitura   [  39% ] 0000/0369 VUs  0m27.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m58.0s), 0001/0571 VUs, 61508 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  45% ] 000/030 VUs    0m58.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  33% ] 001/142 VUs    0m43.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  50% ] 000/030 VUs    0m35.0s/1m10s  143.90 iters/s
+stress-test-1      | pico_leitura   [  40% ] 0000/0369 VUs  0m28.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (0m59.0s), 0002/0571 VUs, 62813 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  45% ] 000/030 VUs    0m59.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  34% ] 002/142 VUs    0m44.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  51% ] 000/030 VUs    0m36.0s/1m10s  153.52 iters/s
+stress-test-1      | pico_leitura   [  41% ] 0001/0369 VUs  0m29.0s/1m10s  0594.47 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m00.0s), 0001/0571 VUs, 64731 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  46% ] 000/030 VUs    1m00.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  35% ] 001/142 VUs    0m45.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  53% ] 000/030 VUs    0m37.0s/1m10s  163.10 iters/s
+stress-test-1      | pico_leitura   [  43% ] 0001/0369 VUs  0m30.0s/1m10s  1194.74 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m01.0s), 0124/0602 VUs, 66868 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  47% ] 004/030 VUs    1m01.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  35% ] 042/167 VUs    0m46.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  54% ] 009/036 VUs    0m38.0s/1m10s  172.71 iters/s
+stress-test-1      | pico_leitura   [  44% ] 0070/0369 VUs  0m31.0s/1m10s  1318.95 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m02.0s), 0174/0602 VUs, 69240 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  48% ] 005/030 VUs    1m02.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  36% ] 056/167 VUs    0m47.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  56% ] 013/036 VUs    0m39.0s/1m10s  182.33 iters/s
+stress-test-1      | pico_leitura   [  46% ] 0100/0369 VUs  0m32.0s/1m10s  1438.96 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m03.0s), 0002/0602 VUs, 71960 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  48% ] 000/030 VUs    1m03.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  37% ] 000/167 VUs    0m48.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  57% ] 001/036 VUs    0m40.0s/1m10s  191.92 iters/s
+stress-test-1      | pico_leitura   [  47% ] 0001/0369 VUs  0m33.0s/1m10s  1558.88 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m04.0s), 0002/0602 VUs, 74588 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  49% ] 000/030 VUs    1m04.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  38% ] 000/167 VUs    0m49.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  59% ] 001/036 VUs    0m41.0s/1m10s  096.50 iters/s
+stress-test-1      | pico_leitura   [  49% ] 0000/0369 VUs  0m34.0s/1m10s  1678.89 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m05.0s), 0003/0602 VUs, 77239 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  50% ] 000/030 VUs    1m05.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  38% ] 001/167 VUs    0m50.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  60% ] 000/036 VUs    0m42.0s/1m10s  006.93 iters/s
+stress-test-1      | pico_leitura   [  50% ] 0002/0369 VUs  0m35.0s/1m10s  1798.90 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m06.0s), 0003/0602 VUs, 79964 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  51% ] 000/030 VUs    1m06.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  39% ] 001/167 VUs    0m51.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  61% ] 000/036 VUs    0m43.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  51% ] 0002/0369 VUs  0m36.0s/1m10s  1918.97 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m07.0s), 0003/0602 VUs, 82805 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  52% ] 000/030 VUs    1m07.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  40% ] 001/167 VUs    0m52.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  63% ] 000/036 VUs    0m44.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  53% ] 0002/0369 VUs  0m37.0s/1m10s  2038.91 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m08.0s), 0003/0602 VUs, 85770 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  52% ] 000/030 VUs    1m08.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  41% ] 001/167 VUs    0m53.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  64% ] 000/036 VUs    0m45.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  54% ] 0002/0369 VUs  0m38.0s/1m10s  2158.97 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m09.0s), 0003/0602 VUs, 88853 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  53% ] 000/030 VUs    1m09.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  42% ] 001/167 VUs    0m54.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  66% ] 000/036 VUs    0m46.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  56% ] 0002/0369 VUs  0m39.0s/1m10s  2278.97 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m10.0s), 0324/0602 VUs, 91734 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  54% ] 007/030 VUs    1m10.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  42% ] 079/167 VUs    0m55.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  67% ] 000/036 VUs    0m47.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  57% ] 0238/0369 VUs  0m40.0s/1m10s  2398.92 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m11.0s), 0002/0645 VUs, 94660 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  55% ] 000/030 VUs    1m11.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  43% ] 001/169 VUs    0m56.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  69% ] 000/036 VUs    0m48.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  59% ] 0001/0410 VUs  0m41.0s/1m10s  1210.45 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m12.0s), 0001/0645 VUs, 96135 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  55% ] 000/030 VUs    1m12.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  44% ] 001/169 VUs    0m57.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  70% ] 000/036 VUs    0m49.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  60% ] 0000/0410 VUs  0m42.0s/1m10s  0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m13.0s), 0001/0645 VUs, 97000 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  56% ] 000/030 VUs    1m13.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  45% ] 001/169 VUs    0m58.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  71% ] 000/036 VUs    0m50.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  61% ] 0000/0410 VUs  0m43.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m14.0s), 0000/0645 VUs, 97864 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  57% ] 000/030 VUs    1m14.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  45% ] 000/169 VUs    0m59.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  73% ] 000/036 VUs    0m51.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  63% ] 0000/0410 VUs  0m44.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m15.0s), 0001/0645 VUs, 98728 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  58% ] 000/030 VUs    1m15.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  46% ] 001/169 VUs    1m00.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  74% ] 000/036 VUs    0m52.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  64% ] 0000/0410 VUs  0m45.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m16.0s), 0001/0645 VUs, 99592 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  58% ] 000/030 VUs    1m16.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  47% ] 001/169 VUs    1m01.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  76% ] 000/036 VUs    0m53.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  66% ] 0000/0410 VUs  0m46.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m17.0s), 0001/0645 VUs, 100455 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  59% ] 000/030 VUs    1m17.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  48% ] 001/169 VUs    1m02.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  77% ] 000/036 VUs    0m54.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  67% ] 0000/0410 VUs  0m47.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m18.0s), 0001/0645 VUs, 101320 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  60% ] 000/030 VUs    1m18.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  48% ] 001/169 VUs    1m03.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  79% ] 000/036 VUs    0m55.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  69% ] 0000/0410 VUs  0m48.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m19.0s), 0001/0645 VUs, 102184 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  61% ] 000/030 VUs    1m19.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  49% ] 001/169 VUs    1m04.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  80% ] 000/036 VUs    0m56.0s/1m10s  000.07 iters/s
+stress-test-1      | pico_leitura   [  70% ] 0000/0410 VUs  0m49.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m20.0s), 0001/0645 VUs, 103071 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  62% ] 000/030 VUs    1m20.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  50% ] 001/169 VUs    1m05.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  81% ] 000/036 VUs    0m57.0s/1m10s  047.49 iters/s
+stress-test-1      | pico_leitura   [  71% ] 0000/0410 VUs  0m50.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m21.0s), 0002/0645 VUs, 104006 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  62% ] 000/030 VUs    1m21.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  51% ] 001/169 VUs    1m06.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  83% ] 000/036 VUs    0m58.0s/1m10s  095.75 iters/s
+stress-test-1      | pico_leitura   [  73% ] 0000/0410 VUs  0m51.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m22.0s), 0001/0645 VUs, 104971 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  63% ] 000/030 VUs    1m22.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  52% ] 001/169 VUs    1m07.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  84% ] 000/036 VUs    0m59.0s/1m10s  105.48 iters/s
+stress-test-1      | pico_leitura   [  74% ] 0000/0410 VUs  0m52.0s/1m10s  0000.07 iters/s
+stress-test-1      | time="2026-11-06T21:37:57Z" level=warning msg="The test has generated metrics with 400144 unique time series, which is higher than the suggested limit of 100000 and could cause high memory usage. Consider not using high-cardinality values like unique IDs as metric tags or, if you need them in the URL, use the name metric tag or URL grouping. See https://grafana.com/docs/k6/latest/using-k6/tags-and-groups/ for details." component=metrics-engine-ingester
+stress-test-1      | 
+stress-test-1      | running (1m23.0s), 0053/0645 VUs, 105894 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  64% ] 004/030 VUs    1m23.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  52% ] 043/169 VUs    1m08.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  86% ] 006/036 VUs    1m00.0s/1m10s  115.14 iters/s
+stress-test-1      | pico_leitura   [  76% ] 0000/0410 VUs  0m53.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m24.0s), 0001/0645 VUs, 106929 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  65% ] 000/030 VUs    1m24.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  53% ] 000/169 VUs    1m09.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  87% ] 001/036 VUs    1m01.0s/1m10s  124.75 iters/s
+stress-test-1      | pico_leitura   [  77% ] 0000/0410 VUs  0m54.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m25.0s), 0001/0645 VUs, 107923 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  65% ] 000/030 VUs    1m25.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  54% ] 001/169 VUs    1m10.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  89% ] 000/036 VUs    1m02.0s/1m10s  134.31 iters/s
+stress-test-1      | pico_leitura   [  79% ] 0000/0410 VUs  0m55.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m26.0s), 0001/0645 VUs, 108926 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  66% ] 000/030 VUs    1m26.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  55% ] 001/169 VUs    1m11.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  90% ] 000/036 VUs    1m03.0s/1m10s  143.90 iters/s
+stress-test-1      | pico_leitura   [  80% ] 0000/0410 VUs  0m56.0s/1m10s  0000.07 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m27.0s), 0001/0645 VUs, 110233 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  67% ] 000/030 VUs    1m27.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  55% ] 001/169 VUs    1m12.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  91% ] 000/036 VUs    1m04.0s/1m10s  153.52 iters/s
+stress-test-1      | pico_leitura   [  81% ] 0000/0410 VUs  0m57.0s/1m10s  0594.47 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m28.0s), 0161/0645 VUs, 111990 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  68% ] 005/030 VUs    1m28.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  56% ] 058/169 VUs    1m13.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  93% ] 012/036 VUs    1m05.0s/1m10s  163.10 iters/s
+stress-test-1      | pico_leitura   [  83% ] 0086/0410 VUs  0m58.0s/1m10s  1194.74 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m29.0s), 0003/0645 VUs, 114439 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  68% ] 000/030 VUs    1m29.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  57% ] 001/169 VUs    1m14.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  94% ] 000/036 VUs    1m06.0s/1m10s  172.71 iters/s
+stress-test-1      | pico_leitura   [  84% ] 0002/0410 VUs  0m59.0s/1m10s  1318.95 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m30.0s), 0001/0645 VUs, 116860 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  69% ] 000/030 VUs    1m30.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  58% ] 000/169 VUs    1m15.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  96% ] 001/036 VUs    1m07.0s/1m10s  182.33 iters/s
+stress-test-1      | pico_leitura   [  86% ] 0000/0410 VUs  1m00.0s/1m10s  1438.88 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m31.0s), 0002/0645 VUs, 119411 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  70% ] 000/030 VUs    1m31.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  58% ] 001/169 VUs    1m16.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  97% ] 000/036 VUs    1m08.0s/1m10s  191.92 iters/s
+stress-test-1      | pico_leitura   [  87% ] 0002/0410 VUs  1m01.0s/1m10s  1559.04 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m32.0s), 0001/0645 VUs, 122038 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  71% ] 000/030 VUs    1m32.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  59% ] 000/169 VUs    1m17.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [  99% ] 001/036 VUs    1m09.0s/1m10s  096.50 iters/s
+stress-test-1      | pico_leitura   [  89% ] 0000/0410 VUs  1m02.0s/1m10s  1678.89 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m33.0s), 0003/0645 VUs, 124689 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  72% ] 000/030 VUs    1m33.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  60% ] 001/169 VUs    1m18.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita   [ 100% ] 000/036 VUs    1m10.0s/1m10s  006.93 iters/s
+stress-test-1      | pico_leitura   [  90% ] 0002/0410 VUs  1m03.0s/1m10s  1798.97 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m34.0s), 0001/0645 VUs, 127412 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  72% ] 000/030 VUs    1m34.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  61% ] 001/169 VUs    1m19.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [  91% ] 0000/0410 VUs  1m04.0s/1m10s  1918.84 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m35.0s), 0000/0645 VUs, 130254 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  73% ] 000/030 VUs    1m35.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  62% ] 001/169 VUs    1m20.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [  93% ] 0002/0410 VUs  1m05.0s/1m10s  2038.91 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m36.0s), 0003/0645 VUs, 133218 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  74% ] 000/030 VUs    1m36.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  62% ] 001/169 VUs    1m21.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [  94% ] 0002/0410 VUs  1m06.0s/1m10s  2158.97 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m37.0s), 0001/0645 VUs, 136300 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  75% ] 000/030 VUs    1m37.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  63% ] 000/169 VUs    1m22.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [  96% ] 0001/0410 VUs  1m07.0s/1m10s  2278.86 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m38.0s), 0008/0645 VUs, 139499 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  75% ] 000/030 VUs    1m38.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  64% ] 002/169 VUs    1m23.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [  97% ] 0007/0410 VUs  1m08.0s/1m10s  2399.03 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m39.0s), 0003/0645 VUs, 142178 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  76% ] 000/030 VUs    1m39.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  65% ] 001/169 VUs    1m24.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [  99% ] 0002/0410 VUs  1m09.0s/1m10s  1210.45 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m40.0s), 0002/0645 VUs, 143653 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  77% ] 000/030 VUs    1m40.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  65% ] 002/169 VUs    1m25.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura   [ 100% ] 0000/0410 VUs  1m10.0s/1m10s  0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m41.0s), 0001/0645 VUs, 144517 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  78% ] 000/030 VUs    1m41.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  66% ] 001/169 VUs    1m26.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m42.0s), 0001/0645 VUs, 145382 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  78% ] 000/030 VUs    1m42.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  67% ] 001/169 VUs    1m27.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m43.0s), 0001/0645 VUs, 146246 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  79% ] 000/030 VUs    1m43.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  68% ] 001/169 VUs    1m28.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m44.0s), 0001/0645 VUs, 147110 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  80% ] 000/030 VUs    1m44.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  68% ] 001/169 VUs    1m29.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m45.0s), 0000/0645 VUs, 147974 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  81% ] 000/030 VUs    1m45.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  69% ] 000/169 VUs    1m30.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m46.0s), 0001/0645 VUs, 148838 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  82% ] 000/030 VUs    1m46.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  70% ] 001/169 VUs    1m31.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m47.0s), 0001/0645 VUs, 149702 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  82% ] 000/030 VUs    1m47.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  71% ] 001/169 VUs    1m32.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m48.0s), 0001/0645 VUs, 150565 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  83% ] 000/030 VUs    1m48.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  72% ] 001/169 VUs    1m33.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m49.0s), 0001/0645 VUs, 151429 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  84% ] 000/030 VUs    1m49.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  72% ] 001/169 VUs    1m34.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m50.0s), 0001/0645 VUs, 152294 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  85% ] 000/030 VUs    1m50.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  73% ] 001/169 VUs    1m35.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m51.0s), 0001/0645 VUs, 153158 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  85% ] 000/030 VUs    1m51.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  74% ] 001/169 VUs    1m36.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m52.0s), 0001/0645 VUs, 154022 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  86% ] 000/030 VUs    1m52.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  75% ] 001/169 VUs    1m37.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m53.0s), 0001/0645 VUs, 154886 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  87% ] 000/030 VUs    1m53.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  75% ] 001/169 VUs    1m38.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m54.0s), 0047/0645 VUs, 155703 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  88% ] 004/030 VUs    1m54.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  76% ] 043/169 VUs    1m39.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m55.0s), 0001/0645 VUs, 156614 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  88% ] 000/030 VUs    1m55.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  77% ] 001/169 VUs    1m40.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m56.0s), 0001/0645 VUs, 157478 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  89% ] 000/030 VUs    1m56.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  78% ] 001/169 VUs    1m41.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m57.0s), 0001/0645 VUs, 158342 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  90% ] 000/030 VUs    1m57.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  78% ] 001/169 VUs    1m42.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m58.0s), 0002/0645 VUs, 159205 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  91% ] 000/030 VUs    1m58.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  79% ] 002/169 VUs    1m43.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (1m59.0s), 0001/0645 VUs, 160070 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  92% ] 000/030 VUs    1m59.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  80% ] 001/169 VUs    1m44.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m00.0s), 0001/0645 VUs, 160934 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  92% ] 000/030 VUs    2m00.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  81% ] 001/169 VUs    1m45.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m01.0s), 0001/0645 VUs, 161798 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  93% ] 000/030 VUs    2m01.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  82% ] 001/169 VUs    1m46.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m02.0s), 0001/0645 VUs, 162662 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  94% ] 000/030 VUs    2m02.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  82% ] 001/169 VUs    1m47.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m03.0s), 0001/0645 VUs, 163526 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  95% ] 000/030 VUs    2m03.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  83% ] 001/169 VUs    1m48.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m04.0s), 0001/0645 VUs, 164390 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  95% ] 000/030 VUs    2m04.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  84% ] 001/169 VUs    1m49.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m05.0s), 0001/0645 VUs, 165254 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  96% ] 000/030 VUs    2m05.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  85% ] 001/169 VUs    1m50.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m06.0s), 0001/0645 VUs, 166117 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  97% ] 000/030 VUs    2m06.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  85% ] 001/169 VUs    1m51.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m07.0s), 0001/0645 VUs, 166982 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  98% ] 000/030 VUs    2m07.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  86% ] 001/169 VUs    1m52.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m08.0s), 0001/0645 VUs, 167846 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  98% ] 000/030 VUs    2m08.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  87% ] 001/169 VUs    1m53.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m09.0s), 0001/0645 VUs, 168710 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [  99% ] 000/030 VUs    2m09.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  88% ] 001/169 VUs    1m54.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m10.0s), 0001/0645 VUs, 169574 complete and 0 interrupted iterations
+stress-test-1      | escrita_base   [ 100% ] 000/030 VUs    2m10.0s/2m10s  64.00 iters/s
+stress-test-1      | leitura_base   [  88% ] 001/169 VUs    1m55.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m11.0s), 0001/0645 VUs, 170375 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  89% ] 001/169 VUs    1m56.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m12.0s), 0001/0645 VUs, 171175 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  90% ] 001/169 VUs    1m57.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m13.0s), 0000/0645 VUs, 171975 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  91% ] 001/169 VUs    1m58.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m14.0s), 0001/0645 VUs, 172775 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  92% ] 001/169 VUs    1m59.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m15.0s), 0001/0645 VUs, 173575 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  92% ] 001/169 VUs    2m00.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m16.0s), 0000/0645 VUs, 174375 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  93% ] 000/169 VUs    2m01.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m17.0s), 0001/0645 VUs, 175175 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  94% ] 001/169 VUs    2m02.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m18.0s), 0001/0645 VUs, 175975 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  95% ] 001/169 VUs    2m03.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m19.0s), 0002/0645 VUs, 176773 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  95% ] 002/169 VUs    2m04.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m20.0s), 0055/0645 VUs, 177521 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  96% ] 055/169 VUs    2m05.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m21.0s), 0001/0645 VUs, 178375 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  97% ] 001/169 VUs    2m06.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m22.0s), 0001/0645 VUs, 179175 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  98% ] 001/169 VUs    2m07.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m23.0s), 0001/0645 VUs, 179975 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  98% ] 001/169 VUs    2m08.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m24.0s), 0000/0645 VUs, 180775 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [  99% ] 001/169 VUs    2m09.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      | running (2m25.0s), 0001/0645 VUs, 181575 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s          64.00 iters/s
+stress-test-1      | leitura_base   [ 100% ] 001/169 VUs    2m10.0s/2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s          006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s          0024.49 iters/s
+stress-test-1      | 
+stress-test-1      |      ✓ iot_write: status aceito (2xx)
+stress-test-1      |      ✓ db_read: resposta valida (2xx ou 404)
+stress-test-1      | 
+stress-test-1      |      █ setup
+stress-test-1      | 
+stress-test-1      |      checks.........................: 100.00% ✓ 181583      ✗ 0     
+stress-test-1      |      data_received..................: 43 MB   296 kB/s
+stress-test-1      |      data_sent......................: 123 MB  848 kB/s
+stress-test-1      |      dropped_iterations.............: 721     4.972337/s
+stress-test-1      |      escritas_realizadas............: 475761  3281.059496/s
+stress-test-1      |      get_aceitos....................: 168085  1159.188932/s
+stress-test-1      |      http_req_blocked...............: avg=2.45µs  min=800ns    med=1.63µs   max=8.58ms   p(90)=2.06µs  p(95)=2.29µs 
+stress-test-1      |      http_req_connecting............: avg=673ns   min=0s       med=0s       max=8.56ms   p(90)=0s      p(95)=0s     
+stress-test-1      |      http_req_duration..............: avg=11.3ms  min=108.44µs med=181.38µs max=376.64ms p(90)=40.02ms p(95)=82.88ms
+stress-test-1      |        { expected_response:true }...: avg=11.3ms  min=108.44µs med=181.38µs max=376.64ms p(90)=40.02ms p(95)=82.88ms
+stress-test-1      |      http_req_failed................: 0.00%   ✓ 0           ✗ 181583
+stress-test-1      |      http_req_receiving.............: avg=15.48µs min=5.67µs   med=15.13µs  max=2.28ms   p(90)=20.04µs p(95)=22.4µs 
+stress-test-1      |      http_req_sending...............: avg=9.43µs  min=3.82µs   med=7.45µs   max=3.26ms   p(90)=10.3µs  p(95)=29.97µs
+stress-test-1      |      http_req_tls_handshaking.......: avg=0s      min=0s       med=0s       max=0s       p(90)=0s      p(95)=0s     
+stress-test-1      |      http_req_waiting...............: avg=11.27ms min=91.52µs  med=157.2µs  max=376.61ms p(90)=39.99ms p(95)=82.86ms
+stress-test-1      |      http_reqs......................: 181583  1252.277144/s
+stress-test-1      |      iteration_duration.............: avg=11.44ms min=4.62µs   med=262.1µs  max=376.71ms p(90)=40.16ms p(95)=82.96ms
+stress-test-1      |      iterations.....................: 181583  1252.277144/s
+stress-test-1      |      leitura_sem_dado...............: 52      0.358615/s
+stress-test-1      |      medida_gerada..................: 475761  3281.059496/s
+stress-test-1      |      post_aceitos...................: 13498   93.088213/s
+stress-test-1      |      vus............................: 1       min=0         max=322 
+stress-test-1      |      vus_max........................: 645     min=160       max=645 
+stress-test-1      | 
+stress-test-1      | 
+stress-test-1      | running (2m25.0s), 0000/0645 VUs, 181583 complete and 0 interrupted iterations
+stress-test-1      | escrita_base ✓ [ 100% ] 000/030 VUs    2m10s  64.00 iters/s
+stress-test-1      | leitura_base ✓ [ 100% ] 000/169 VUs    2m10s  800.00 iters/s
+stress-test-1      | pico_escrita ✓ [ 100% ] 000/036 VUs    1m10s  006.93 iters/s
+stress-test-1      | pico_leitura ✓ [ 100% ] 0000/0410 VUs  1m10s  0024.49 iters/s

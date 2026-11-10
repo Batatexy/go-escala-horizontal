@@ -1,0 +1,118 @@
+worker-1-1  | 2026/11/06 21:36:31 worker worker-1 pronto (lote de ate 100 mensagens)
+worker-1-1  | 2026/11/06 21:36:41 worker worker-1: 235 requisicoes / 8147 medicoes processadas
+worker-1-1  | 2026/11/06 21:36:51 worker worker-1: 558 requisicoes / 20059 medicoes processadas
+worker-1-1  | 2026/11/06 21:37:01 worker worker-1: 1051 requisicoes / 37354 medicoes processadas
+worker-1-1  | 2026/11/06 21:37:11 worker worker-1: 1937 requisicoes / 68226 medicoes processadas
+worker-1-1  | 2026/11/06 21:37:21 worker worker-1: 2267 requisicoes / 79627 medicoes processadas
+worker-2-1  | 2026/11/06 21:36:29 worker worker-2 pronto (lote de ate 100 mensagens)
+worker-2-1  | 2026/11/06 21:36:39 worker worker-2: 171 requisicoes / 5799 medicoes processadas
+api-4-1     | 2026/11/06 21:36:28 api ouvindo em :8080
+worker-2-1  | 2026/11/06 21:36:49 worker worker-2: 488 requisicoes / 16765 medicoes processadas
+worker-2-1  | 2026/11/06 21:36:59 worker worker-2: 871 requisicoes / 30346 medicoes processadas
+worker-2-1  | 2026/11/06 21:37:09 worker worker-2: 1983 requisicoes / 69772 medicoes processadas
+worker-2-1  | 2026/11/06 21:37:19 worker worker-2: 2435 requisicoes / 85135 medicoes processadas
+worker-2-1  | 2026/11/06 21:37:30 worker worker-2: 2924 requisicoes / 102494 medicoes processadas
+worker-2-1  | 2026/11/06 21:37:40 worker worker-2: 3885 requisicoes / 136612 medicoes processadas
+worker-2-1  | 2026/11/06 21:37:50 worker worker-2: 4202 requisicoes / 147930 medicoes processadas
+worker-2-1  | 2026/11/06 21:38:00 worker worker-2: 4846 requisicoes / 170488 medicoes processadas
+worker-2-1  | 2026/11/06 21:38:10 worker worker-2: 5143 requisicoes / 181330 medicoes processadas
+worker-2-1  | 2026/11/06 21:38:20 worker worker-2: 5465 requisicoes / 192648 medicoes processadas
+worker-2-1  | 2026/11/06 21:38:30 worker worker-2: 5785 requisicoes / 203846 medicoes processadas
+worker-2-1  | 2026/11/06 21:38:40 worker worker-2: 6103 requisicoes / 214847 medicoes processadas
+worker-1-1  | 2026/11/06 21:37:31 worker worker-1: 2895 requisicoes / 102140 medicoes processadas
+worker-1-1  | 2026/11/06 21:37:41 worker worker-1: 3825 requisicoes / 134994 medicoes processadas
+worker-1-1  | 2026/11/06 21:37:51 worker worker-1: 4152 requisicoes / 146168 medicoes processadas
+worker-1-1  | 2026/11/06 21:38:01 worker worker-1: 5075 requisicoes / 179260 medicoes processadas
+worker-1-1  | 2026/11/06 21:38:11 worker worker-1: 6220 requisicoes / 219540 medicoes processadas
+worker-1-1  | 2026/11/06 21:38:21 worker worker-1: 6541 requisicoes / 230872 medicoes processadas
+worker-1-1  | 2026/11/06 21:38:31 worker worker-1: 6863 requisicoes / 241781 medicoes processadas
+worker-1-1  | 2026/11/06 21:38:41 worker worker-1: 7188 requisicoes / 253530 medicoes processadas
+redis-1     | 1:C 06 Nov 2026 21:36:17.188 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+api-2-1     | 2026/11/06 21:36:29 api ouvindo em :8080
+redis-1     | 1:C 06 Nov 2026 21:36:17.188 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1     | 1:C 06 Nov 2026 21:36:17.188 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1     | 1:C 06 Nov 2026 21:36:17.188 * Configuration loaded
+redis-1     | 1:M 06 Nov 2026 21:36:17.188 * Increased maximum number of open files to 10032 (it was originally set to 2048).
+redis-1     | 1:M 06 Nov 2026 21:36:17.188 * monotonic clock: POSIX clock_gettime
+redis-1     | 1:M 06 Nov 2026 21:36:17.188 * Running mode=standalone, port=6379.
+redis-1     | 1:M 06 Nov 2026 21:36:17.189 * Server initialized
+redis-1     | 1:M 06 Nov 2026 21:36:17.190 * Creating AOF base file appendonly.aof.1.base.rdb on server start
+api-6-1     | 2026/11/06 21:36:30 api ouvindo em :8080
+redis-1     | 1:M 06 Nov 2026 21:36:17.193 * Creating AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1     | 1:M 06 Nov 2026 21:36:17.193 * Ready to accept connections tcp
+api-5-1     | 2026/11/06 21:36:30 api ouvindo em :8080
+api-1-1     | 2026/11/06 21:36:28 api ouvindo em :8080
+gateway-1   | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+api-3-1     | 2026/11/06 21:36:30 api ouvindo em :8080
+gateway-1   | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+gateway-1   | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+gateway-1   | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+gateway-1   | 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+gateway-1   | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+gateway-1   | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+gateway-1   | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+gateway-1   | /docker-entrypoint.sh: Configuration complete; ready for start up
+gateway-1   | 2026/11/06 21:39:21 [warn] 30#30: *9079 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 172.18.0.3, server: , request: "GET /audit/medidas?limit=1000&cursor=132000 HTTP/1.1", upstream: "http://172.19.0.9:8080/audit/medidas?limit=1000&cursor=132000", host: "aps-app:8080"
+gateway-1   | 2026/11/06 21:39:22 [warn] 30#30: *9080 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/2/00/0000000002 while reading upstream, client: 172.18.0.3, server: , request: "GET /audit/medidas?limit=1000&cursor=206000 HTTP/1.1", upstream: "http://172.19.0.8:8080/audit/medidas?limit=1000&cursor=206000", host: "aps-app:8080"
+gateway-1   | 2026/11/06 21:39:22 [warn] 30#30: *9082 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/3/00/0000000003 while reading upstream, client: 172.18.0.3, server: , request: "GET /audit/medidas?limit=1000&cursor=278000 HTTP/1.1", upstream: "http://172.19.0.8:8080/audit/medidas?limit=1000&cursor=278000", host: "aps-app:8080"
+postgres-1  | The files belonging to this database system will be owned by user "postgres".
+postgres-1  | This user must also own the server process.
+postgres-1  | 
+postgres-1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres-1  | The default database encoding has accordingly been set to "UTF8".
+postgres-1  | The default text search configuration will be set to "english".
+postgres-1  | 
+postgres-1  | Data page checksums are disabled.
+postgres-1  | 
+postgres-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres-1  | creating subdirectories ... ok
+postgres-1  | selecting dynamic shared memory implementation ... posix
+postgres-1  | selecting default max_connections ... 100
+postgres-1  | selecting default shared_buffers ... 128MB
+postgres-1  | selecting default time zone ... UTC
+postgres-1  | creating configuration files ... ok
+postgres-1  | running bootstrap script ... ok
+postgres-1  | sh: locale: not found
+postgres-1  | 2026-11-06 21:36:19.918 UTC [41] WARNING:  no usable system locales were found
+postgres-1  | performing post-bootstrap initialization ... ok
+postgres-1  | syncing data to disk ... ok
+postgres-1  | 
+postgres-1  | 
+postgres-1  | Success. You can now start the database server using:
+postgres-1  | 
+postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres-1  | 
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1  | waiting for server to start....2026-11-06 21:36:24.034 UTC [71] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 21:36:24.037 UTC [71] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 21:36:24.046 UTC [74] LOG:  database system was shut down at 2026-11-06 21:36:22 UTC
+postgres-1  | 2026-11-06 21:36:24.055 UTC [71] LOG:  database system is ready to accept connections
+postgres-1  |  done
+postgres-1  | server started
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/01-esquema.sql
+postgres-1  | CREATE TABLE
+postgres-1  | CREATE TABLE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | waiting for server to shut down....2026-11-06 21:36:24.830 UTC [71] LOG:  received fast shutdown request
+postgres-1  | 2026-11-06 21:36:24.831 UTC [71] LOG:  aborting any active transactions
+postgres-1  | 2026-11-06 21:36:24.913 UTC [71] LOG:  background worker "logical replication launcher" (PID 77) exited with exit code 1
+postgres-1  | 2026-11-06 21:36:24.913 UTC [72] LOG:  shutting down
+postgres-1  | 2026-11-06 21:36:24.915 UTC [72] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-11-06 21:36:25.273 UTC [72] LOG:  checkpoint complete: wrote 935 buffers (7.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.019 s, sync=0.336 s, total=0.360 s; sync files=311, longest=0.062 s, average=0.002 s; distance=1725 kB, estimate=1725 kB; lsn=0/16A67D8, redo lsn=0/16A67D8
+postgres-1  | 2026-11-06 21:36:25.277 UTC [71] LOG:  database system is shut down
+postgres-1  |  done
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-11-06 21:36:25.344 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 21:36:25.344 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-11-06 21:36:25.344 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-11-06 21:36:25.414 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 21:36:25.417 UTC [89] LOG:  database system was shut down at 2026-11-06 21:36:25 UTC
+postgres-1  | 2026-11-06 21:36:25.421 UTC [1] LOG:  database system is ready to accept connections

@@ -1,0 +1,165 @@
+{
+    "metrics": {
+        "post_aceitos": {
+            "count": 6752,
+            "rate": 46.56502574689028
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 1.652814678229562,
+            "min": 0.120549,
+            "med": 0.188949,
+            "max": 188.411293,
+            "p(90)": 0.35908799999999996,
+            "p(95)": 0.49768199999999996
+        },
+        "dropped_iterations": {
+            "rate": 0.393099299107338,
+            "count": 57
+        },
+        "checks": {
+            "passes": 91096,
+            "fails": 0,
+            "value": 1
+        },
+        "iteration_duration": {
+            "p(90)": 0.8645376000000011,
+            "p(95)": 1.702728999999999,
+            "avg": 1.7972494237021857,
+            "min": 0.00433,
+            "med": 0.271289,
+            "max": 189.514088
+        },
+        "http_req_waiting": {
+            "avg": 1.625694883211138,
+            "min": 0.099249,
+            "med": 0.163759,
+            "max": 188.361834,
+            "p(90)": 0.313598,
+            "p(95)": 0.44061799999999995
+        },
+        "escritas_realizadas": {
+            "count": 235996,
+            "rate": 1627.5414419672866
+        },
+        "vus_max": {
+            "value": 208,
+            "min": 160,
+            "max": 208
+        },
+        "data_sent": {
+            "count": 61122677,
+            "rate": 421531.2541800738
+        },
+        "data_received": {
+            "count": 21503571,
+            "rate": 148298.92435798032
+        },
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 24
+        },
+        "http_req_blocked": {
+            "avg": 0.002106365054447847,
+            "min": 0.0009,
+            "med": 0.00168,
+            "max": 4.631895,
+            "p(90)": 0.00209,
+            "p(95)": 0.00232
+        },
+        "http_req_connecting": {
+            "avg": 0.00028398227144989886,
+            "min": 0,
+            "med": 0,
+            "max": 4.588776,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_reqs": {
+            "rate": 628.2416447628432,
+            "count": 91096
+        },
+        "http_req_sending": {
+            "p(95)": 0.0331,
+            "avg": 0.009987705332835774,
+            "min": 0.00396,
+            "med": 0.00797,
+            "max": 0.729676,
+            "p(90)": 0.010815
+        },
+        "http_req_duration": {
+            "avg": 1.652814678229562,
+            "min": 0.120549,
+            "med": 0.188949,
+            "max": 188.411293,
+            "p(90)": 0.35908799999999996,
+            "p(95)": 0.49768199999999996
+        },
+        "iterations": {
+            "count": 91096,
+            "rate": 628.2416447628432
+        },
+        "medida_gerada": {
+            "count": 235996,
+            "rate": 1627.5414419672866
+        },
+        "http_req_receiving": {
+            "min": 0.00622,
+            "med": 0.01661,
+            "max": 0.682147,
+            "p(90)": 0.021,
+            "p(95)": 0.023549,
+            "avg": 0.01713208968560681
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 91096,
+            "value": 0
+        },
+        "get_aceitos": {
+            "count": 84344,
+            "rate": 581.6766190159528
+        }
+    },
+    "setup_data": {
+        "inicio": 1794003936069
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {},
+                "name": "setup",
+                "path": "::setup"
+            }
+        },
+        "checks": {
+            "iot_write: status aceito (2xx)": {
+                "fails": 0,
+                "name": "iot_write: status aceito (2xx)",
+                "path": "::iot_write: status aceito (2xx)",
+                "id": "8ccd02df567bcd7daf15ae35713cb9de",
+                "passes": 6752
+            },
+            "db_read: resposta valida (2xx ou 404)": {
+                "path": "::db_read: resposta valida (2xx ou 404)",
+                "id": "c83970628b8a98a2291fb2f78db5fc11",
+                "passes": 84344,
+                "fails": 0,
+                "name": "db_read: resposta valida (2xx ou 404)"
+            }
+        }
+    }
+}

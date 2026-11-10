@@ -1,0 +1,1501 @@
+# =============================================================================
+# docker-compose.distribuido.yaml — CENÁRIO B (arquitetura distribuída)
+#
+# ARQUIVO AUTOSSUFICIENTE, GERADO por ferramentas/gerar_compose.py a partir dos
+# fontes em fontes/. Não depende de nenhum arquivo além do kit base: o código Go
+# vai embutido em build.dockerfile_inline; nginx e esquema SQL, em `configs`.
+#
+# Topologia:   k6 -> aps-app:8080 (nginx, least_conn)
+#                     -> 6 instâncias da API (Go, sem estado)
+#                          -> Redis Streams (fila durável, AOF) + cache de índices
+#                               -> 2 workers (Go) -> PostgreSQL (gravação em lote)
+#
+# Orçamento de CPU (soma de deploy.resources.limits.cpus; teto 0.80):
+#   gateway (nginx)    0.10
+#   redis              0.10
+#   postgres           0.15
+#   api-1              0.05
+#   api-2              0.05
+#   api-3              0.05
+#   api-4              0.05
+#   api-5              0.05
+#   api-6              0.05
+#   worker-1           0.05
+#   worker-2           0.05
+#   TOTAL              0.75
+#
+# Regras do regulamento atendidas:
+#   * toda instância Go (API e worker) declara exatamente cpus: '0.05';
+#   * porta pública 8080 e alias de rede aps-app na rede externa aps-net;
+#   * nenhum volume do tipo external (só a rede aps-net é externa);
+#   * PostgreSQL e Redis ficam na rede interna: a plataforma de teste só fala
+#     com a aplicação pelo contrato HTTP (rotas /audit/*), nunca com o banco.
+# =============================================================================
+name: aps-sistema
+
+x-ambiente-go: &ambiente-go
+  DATABASE_URL: postgres://iot:iot@postgres:5432/telemetria?sslmode=disable
+  REDIS_ADDR: redis:6379
+  GOMAXPROCS: "1"        # com 0.05 vCPU, uma só thread evita estrangulamento do CFS
+  GOMEMLIMIT: 48MiB      # abaixo do limite de 64M do contêiner: o GC age antes do OOM
+
+x-servico-go: &servico-go
+  image: aps-distribuido-app:1.0
+  build:
+    context: .
+    dockerfile_inline: |
+      FROM golang:1.25-alpine AS builder
+      WORKDIR /src
+      COPY <<'EOF_GO_MOD' /src/go.mod
+      module aps/distribuido
+
+      go 1.25.0
+
+      require (
+      	github.com/jackc/pgx/v5 v5.11.0
+      	github.com/redis/go-redis/v9 v9.22.0
+      )
+
+      require (
+      	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+      	github.com/jackc/pgpassfile v1.0.0 // indirect
+      	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+      	github.com/jackc/puddle/v2 v2.2.2 // indirect
+      	go.uber.org/atomic v1.11.0 // indirect
+      	golang.org/x/sync v0.17.0 // indirect
+      	golang.org/x/sys v0.30.0 // indirect
+      	golang.org/x/text v0.29.0 // indirect
+      )
+      EOF_GO_MOD
+      COPY <<'EOF_GO_SUM' /src/go.sum
+      github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=
+      github.com/bsm/ginkgo/v2 v2.12.0/go.mod h1:SwYbGRRDovPVboqFv0tPTcG1sN61LM1Z4ARdbAV9g4c=
+      github.com/bsm/gomega v1.27.10 h1:yeMWxP2pV2fG3FgAODIY8EiRE3dy0aeFYt4l7wh6yKA=
+      github.com/bsm/gomega v1.27.10/go.mod h1:JyEr/xRbxbtgWNi8tIEVPUYZ5Dzef52k01W3YH0H+O0=
+      github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
+      github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
+      github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+      github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+      github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+      github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
+      github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
+      github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=
+      github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
+      github.com/jackc/pgx/v5 v5.11.0 h1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=
+      github.com/jackc/pgx/v5 v5.11.0/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
+      github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
+      github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
+      github.com/klauspost/cpuid/v2 v2.2.10 h1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=
+      github.com/klauspost/cpuid/v2 v2.2.10/go.mod h1:hqwkgyIinND0mEev00jJYCxPNVRVXFQeu1XKlok6oO0=
+      github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+      github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+      github.com/redis/go-redis/v9 v9.22.0 h1:laDvpYXTJtZLloinw1fA5Kqd6HAEH2XKxOkG/PDq2F0=
+      github.com/redis/go-redis/v9 v9.22.0/go.mod h1:y2g0Wj8rQvuK0ELM+oxSudcLtC09JScs98I/X9gRWY4=
+      github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+      github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+      github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+      github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
+      github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
+      github.com/zeebo/xxh3 v1.1.0 h1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=
+      github.com/zeebo/xxh3 v1.1.0/go.mod h1:IisAie1LELR4xhVinxWS5+zf1lA4p0MW4T+w+W07F5s=
+      go.uber.org/atomic v1.11.0 h1:ZvwS0R+56ePWxUNi+Atn9dWONBPp/AUETXlHW0DxSjE=
+      go.uber.org/atomic v1.11.0/go.mod h1:LUxbIzbOniOlMKjJjyPfpl4v+PKK2cNJn91OQbhoJI0=
+      golang.org/x/sync v0.17.0 h1:l60nONMj9l5drqw6jlhIELNv9I0A4OFgRsG9k2oT9Ug=
+      golang.org/x/sync v0.17.0/go.mod h1:9KTHXmSnoGruLpwFjVSX0lNNA75CykiMECbovNTZqGI=
+      golang.org/x/sys v0.30.0 h1:QjkSwP/36a20jFYWkSue1YwXzLmsV5Gfq7Eiy72C1uc=
+      golang.org/x/sys v0.30.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+      golang.org/x/text v0.29.0 h1:1neNs90w9YzJ9BocxfsQNHKuAT4pkghyXc4nhZ6sJvk=
+      golang.org/x/text v0.29.0/go.mod h1:7MhJOA9CD2qZyOKYazxdYMF85OwPdEr9jTtBpO7ydH4=
+      gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+      gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+      gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+      gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+      EOF_GO_SUM
+      RUN go mod download
+      COPY <<'EOF_MAIN_GO' /src/main.go
+      package main
+
+      // main.go — ponto de entrada único das duas funções da arquitetura
+      // distribuída. A variável ROLE escolhe o papel do contêiner:
+      //
+      //	ROLE=api     instância HTTP sem estado (atrás do nginx)
+      //	ROLE=worker  consumidor da fila durável que grava no PostgreSQL
+      //
+      // Usar um só binário para os dois papéis mantém uma única imagem (um único
+      // build) e garante que API e worker compartilhem exatamente o mesmo código de
+      // domínio (hash, Humidex, timestamp canônico).
+
+      import (
+      	"context"
+      	"log"
+      	"os/signal"
+      	"syscall"
+      )
+
+      func main() {
+      	ctx, parar := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+      	defer parar()
+
+      	switch papel := envString("ROLE", "api"); papel {
+      	case "api":
+      		executarAPI(ctx)
+      	case "worker":
+      		executarWorker(ctx)
+      	default:
+      		log.Fatalf("ROLE invalido: %q (use api ou worker)", papel)
+      	}
+      }
+      EOF_MAIN_GO
+      COPY <<'EOF_INFRA_GO' /src/infra.go
+      package main
+
+      // infra.go — configuração por variáveis de ambiente e abertura das conexões
+      // com PostgreSQL e Redis. As duas funções de abertura tentam por até 60 s: em
+      // Compose, "container iniciado" não significa "dependência pronta".
+
+      import (
+      	"context"
+      	"fmt"
+      	"log"
+      	"os"
+      	"strconv"
+      	"time"
+
+      	"github.com/jackc/pgx/v5/pgxpool"
+      	"github.com/redis/go-redis/v9"
+      )
+
+      func envString(chave, padrao string) string {
+      	if v := os.Getenv(chave); v != "" {
+      		return v
+      	}
+      	return padrao
+      }
+
+      func envInt(chave string, padrao int) int {
+      	v, err := strconv.Atoi(os.Getenv(chave))
+      	if err != nil || v <= 0 {
+      		return padrao
+      	}
+      	return v
+      }
+
+      const (
+      	// chaveStream é a fila durável de lotes aceitos e ainda não gravados.
+      	chaveStream = "telemetria:lotes"
+      	// chaveMortos recebe mensagens ilegíveis (veneno) para inspeção posterior,
+      	// em vez de travar o consumidor em um laço infinito de reentrega.
+      	chaveMortos = "telemetria:mortos"
+      	// grupoWorkers é o grupo de consumidores do stream.
+      	grupoWorkers = "workers"
+      )
+
+      // abrirPostgres cria o pool de conexões e só retorna quando o banco responde.
+      func abrirPostgres(ctx context.Context, maxConns int32) (*pgxpool.Pool, error) {
+      	cfg, err := pgxpool.ParseConfig(envString("DATABASE_URL",
+      		"postgres://iot:iot@postgres:5432/telemetria?sslmode=disable"))
+      	if err != nil {
+      		return nil, fmt.Errorf("DATABASE_URL invalida: %w", err)
+      	}
+      	cfg.MaxConns = maxConns
+      	cfg.MinConns = 0
+      	cfg.MaxConnLifetime = 10 * time.Minute
+
+      	pool, err := pgxpool.NewWithConfig(ctx, cfg)
+      	if err != nil {
+      		return nil, err
+      	}
+      	limite := time.Now().Add(60 * time.Second)
+      	for {
+      		pctx, cancel := context.WithTimeout(ctx, 3*time.Second)
+      		err = pool.Ping(pctx)
+      		cancel()
+      		if err == nil {
+      			return pool, nil
+      		}
+      		if time.Now().After(limite) || ctx.Err() != nil {
+      			pool.Close()
+      			return nil, fmt.Errorf("postgres indisponivel: %w", err)
+      		}
+      		log.Printf("aguardando postgres: %v", err)
+      		time.Sleep(time.Second)
+      	}
+      }
+
+      // abrirRedis cria o cliente e só retorna quando o Redis responde ao PING.
+      func abrirRedis(ctx context.Context, poolSize int) (*redis.Client, error) {
+      	rdb := redis.NewClient(&redis.Options{
+      		Addr:         envString("REDIS_ADDR", "redis:6379"),
+      		PoolSize:     poolSize,
+      		DialTimeout:  2 * time.Second,
+      		ReadTimeout:  3 * time.Second,
+      		WriteTimeout: 3 * time.Second,
+      	})
+      	limite := time.Now().Add(60 * time.Second)
+      	for {
+      		pctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+      		err := rdb.Ping(pctx).Err()
+      		cancel()
+      		if err == nil {
+      			return rdb, nil
+      		}
+      		if time.Now().After(limite) || ctx.Err() != nil {
+      			_ = rdb.Close()
+      			return nil, fmt.Errorf("redis indisponivel: %w", err)
+      		}
+      		log.Printf("aguardando redis: %v", err)
+      		time.Sleep(time.Second)
+      	}
+      }
+      EOF_INFRA_GO
+      COPY <<'EOF_CACHE_GO' /src/cache.go
+      package main
+
+      // cache.go — cache do índice de calor por sensor.
+      //
+      // A fonte da verdade é a tabela agregados_sensor (soma e número de amostras,
+      // atualizados na mesma transação que grava as medições). O Redis guarda uma
+      // cópia "soma:amostras" para que a rota de leitura, que domina o tráfego,
+      // responda em O(1) sem consultar o PostgreSQL nem calcular média sobre um
+      // conjunto de linhas crescente.
+      //
+      // Duas escritas concorrentes sobre a mesma chave (worker e preenchimento por
+      // leitura, ou dois workers) poderiam deixar um valor antigo por cima de um
+      // novo. O número de amostras só cresce, então o script Lua abaixo recusa
+      // qualquer escrita com menos amostras do que a já armazenada.
+
+      import (
+      	"context"
+      	"strconv"
+      	"strings"
+
+      	"github.com/redis/go-redis/v9"
+      )
+
+      const ttlCacheSegundos = 3600
+
+      // gravarSeMaisNovo: KEYS[1]=chave; ARGV[1]="soma:amostras"; ARGV[2]=amostras;
+      // ARGV[3]=TTL em segundos. Retorna 1 se gravou e 0 se descartou.
+      var scriptGravarIndice = redis.NewScript(`
+      local atual = redis.call('GET', KEYS[1])
+      if atual then
+        local n = tonumber(string.match(atual, ':(%d+)$$'))
+        if n and n > tonumber(ARGV[2]) then return 0 end
+      end
+      redis.call('SET', KEYS[1], ARGV[1], 'EX', ARGV[3])
+      return 1
+      `)
+
+      func chaveIndice(sensorID string) string { return "idx:" + sensorID }
+
+      func codificarAgregado(soma float64, amostras int64) string {
+      	return strconv.FormatFloat(soma, 'g', -1, 64) + ":" + strconv.FormatInt(amostras, 10)
+      }
+
+      func decodificarAgregado(v string) (soma float64, amostras int64, ok bool) {
+      	i := strings.LastIndexByte(v, ':')
+      	if i <= 0 {
+      		return 0, 0, false
+      	}
+      	s, err1 := strconv.ParseFloat(v[:i], 64)
+      	n, err2 := strconv.ParseInt(v[i+1:], 10, 64)
+      	if err1 != nil || err2 != nil || n <= 0 {
+      		return 0, 0, false
+      	}
+      	return s, n, true
+      }
+
+      // gravarIndiceCache escreve (de forma monotônica) o agregado de um sensor.
+      func gravarIndiceCache(ctx context.Context, rdb redis.Scripter, sensorID string, soma float64, amostras int64) error {
+      	return scriptGravarIndice.Run(ctx, rdb, []string{chaveIndice(sensorID)},
+      		codificarAgregado(soma, amostras), amostras, ttlCacheSegundos).Err()
+      }
+      EOF_CACHE_GO
+      COPY <<'EOF_DOMINIO_GO' /src/dominio.go
+      package main
+
+      // dominio.go — regras de negócio puras (sem I/O): timestamp canônico, âncora
+      // criptográfica (hash) e índice Humidex. Nada aqui toca rede ou banco, o que
+      // permite testar o contrato da auditoria em milissegundos (dominio_test.go).
+
+      import (
+      	"crypto/sha256"
+      	"encoding/hex"
+      	"fmt"
+      	"math"
+      	"time"
+      )
+
+      // layoutCanonico é a forma obrigatória do timestamp: UTC com exatamente seis
+      // casas decimais. O sufixo "Z" é acrescentado à parte para garantir que nunca
+      // apareça um deslocamento de fuso ("+00:00") no lugar dele.
+      const layoutCanonico = "2006-01-02T15:04:05.000000"
+
+      // timestampCanonico serializa um instante na forma que entra no hash e que a
+      // rota /audit/medidas devolve. Qualquer outra representação (três casas, fuso
+      // local, sem sufixo) produziria hash diferente para a mesma medição.
+      func timestampCanonico(t time.Time) string {
+      	return t.UTC().Format(layoutCanonico) + "Z"
+      }
+
+      // interpretarTimestamp aceita RFC 3339 com qualquer número de casas decimais e
+      // qualquer deslocamento de fuso, e devolve o instante em UTC truncado em
+      // microssegundos (a precisão do tipo timestamptz do PostgreSQL). O truncamento
+      // garante que o valor lido do banco serialize exatamente como o valor que
+      // entrou no hash.
+      func interpretarTimestamp(s string) (time.Time, error) {
+      	t, err := time.Parse(time.RFC3339Nano, s)
+      	if err != nil {
+      		return time.Time{}, fmt.Errorf("timestamp fora do formato RFC 3339: %q", s)
+      	}
+      	return t.UTC().Truncate(time.Microsecond), nil
+      }
+
+      // hashMedicao é a âncora de integridade de UMA medição:
+      // SHA-256(sensor_id + timestamp_canônico + raw_packet), em hexadecimal
+      // minúsculo, com concatenação direta e sem separadores. É idêntica à função
+      // computeHash do avaliador (avaliar_justo.go).
+      func hashMedicao(sensorID, tsCanonico, rawPacket string) string {
+      	soma := sha256.Sum256([]byte(sensorID + tsCanonico + rawPacket))
+      	return hex.EncodeToString(soma[:])
+      }
+
+      // humidex calcula o índice de calor percebido a partir da temperatura do ar
+      // (°C) e da umidade relativa (%). A pressão de vapor é estimada pela fórmula
+      // de Magnus, com os mesmos coeficientes do kit base (Anexo D.1 do enunciado).
+      // É a parte intensiva em ponto flutuante da carga: não pode ser descartada.
+      func humidex(tempC, umidadePct float64) float64 {
+      	e := 6.112 * math.Exp((17.62*tempC)/(243.12+tempC)) * (umidadePct / 100.0)
+      	return tempC + 0.5555*(e-10.0)
+      }
+
+      // ---------- contratos de entrada ----------
+
+      type medicaoEntrada struct {
+      	SensorID  string `json:"sensor_id"`
+      	Timestamp string `json:"timestamp"`
+      	Metrics   struct {
+      		Microclimate struct {
+      			Temperatura float64 `json:"temperature_celsius"`
+      			Umidade     float64 `json:"relative_humidity_percentage"`
+      		} `json:"microclimate"`
+      	} `json:"metrics"`
+      	RawPacket string `json:"raw_telemetry_packet"`
+      }
+
+      type loteEntrada struct {
+      	Measurements []medicaoEntrada `json:"measurements"`
+      }
+
+      // medicaoProcessada é a medição já validada e enriquecida (hash e índice
+      // calculados na API). É o formato que trafega pela fila; os nomes curtos
+      // reduzem os bytes por medição no Redis e o custo de serialização.
+      type medicaoProcessada struct {
+      	Sensor  string  `json:"s"`
+      	TsMicro int64   `json:"t"` // instante em microssegundos desde a época Unix
+      	Raw     string  `json:"r"`
+      	Hash    string  `json:"h"`
+      	Temp    float64 `json:"c"`
+      	Umid    float64 `json:"u"`
+      	Humidex float64 `json:"x"`
+      }
+
+      // processarLote valida cada medição e calcula hash e Humidex. Medições
+      // inválidas (sensor vazio, pacote vazio, timestamp ilegível) são contadas como
+      // rejeitadas e não entram na fila; o restante do lote segue normalmente.
+      func processarLote(entrada []medicaoEntrada) (aceitas []medicaoProcessada, somaHumidex float64) {
+      	aceitas = make([]medicaoProcessada, 0, len(entrada))
+      	for i := range entrada {
+      		m := &entrada[i]
+      		if m.SensorID == "" || m.RawPacket == "" || len(m.SensorID) > 64 {
+      			continue
+      		}
+      		ts, err := interpretarTimestamp(m.Timestamp)
+      		if err != nil {
+      			continue
+      		}
+      		t := m.Metrics.Microclimate.Temperatura
+      		u := m.Metrics.Microclimate.Umidade
+      		if math.IsNaN(t) || math.IsInf(t, 0) || math.IsNaN(u) || math.IsInf(u, 0) {
+      			continue
+      		}
+      		x := humidex(t, u)
+      		if math.IsNaN(x) || math.IsInf(x, 0) {
+      			continue
+      		}
+      		aceitas = append(aceitas, medicaoProcessada{
+      			Sensor:  m.SensorID,
+      			TsMicro: ts.UnixMicro(),
+      			Raw:     m.RawPacket,
+      			Hash:    hashMedicao(m.SensorID, timestampCanonico(ts), m.RawPacket),
+      			Temp:    t,
+      			Umid:    u,
+      			Humidex: x,
+      		})
+      		somaHumidex += x
+      	}
+      	return aceitas, somaHumidex
+      }
+      EOF_DOMINIO_GO
+      COPY <<'EOF_API_GO' /src/api.go
+      package main
+
+      // api.go — papel "api": instância sem estado atrás do balanceador.
+      //
+      // Caminho de escrita:  valida -> calcula hash e Humidex -> XADD no Redis ->
+      //                      responde 202. Não toca o PostgreSQL.
+      // Caminho de leitura:  GET no Redis (O(1)); em falta, consulta o agregado no
+      //                      PostgreSQL e preenche o cache.
+      // Auditoria:           lê o PostgreSQL, que é a fonte da verdade.
+
+      import (
+      	"context"
+      	"encoding/json"
+      	"errors"
+      	"log"
+      	"net/http"
+      	"strconv"
+      	"time"
+
+      	"github.com/jackc/pgx/v5"
+      	"github.com/jackc/pgx/v5/pgxpool"
+      	"github.com/redis/go-redis/v9"
+      )
+
+      type servidorAPI struct {
+      	pg  *pgxpool.Pool
+      	rdb *redis.Client
+      }
+
+      type respostaIngestao struct {
+      	Status          string  `json:"status"`
+      	SensorID        string  `json:"sensor_id"`
+      	TotalRecebido   int     `json:"total_recebido"`
+      	TotalAceito     int     `json:"total_aceito"`
+      	TotalPersistido int     `json:"total_persistido"`
+      	TotalRejeitado  int     `json:"total_rejeitado"`
+      	HumidexMedio    float64 `json:"humidex_medio"`
+      }
+
+      type medidaAuditoria struct {
+      	ID        int64  `json:"id"`
+      	SensorID  string `json:"sensor_id"`
+      	Timestamp string `json:"timestamp"`
+      	RawPacket string `json:"raw_packet"`
+      	Hash      string `json:"hash"`
+      }
+
+      func escreverJSON(w http.ResponseWriter, status int, corpo any) {
+      	w.Header().Set("Content-Type", "application/json")
+      	w.WriteHeader(status)
+      	if err := json.NewEncoder(w).Encode(corpo); err != nil {
+      		log.Printf("aviso: falha ao serializar resposta: %v", err)
+      	}
+      }
+
+      // ---------- GET /health ----------
+
+      // health responde 200 quando a instância consegue falar com as duas
+      // dependências e 503 caso contrário. A plataforma de teste só começa a injetar
+      // carga depois de receber 200.
+      func (s *servidorAPI) health(w http.ResponseWriter, r *http.Request) {
+      	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+      	defer cancel()
+      	if err := s.pg.Ping(ctx); err != nil {
+      		http.Error(w, "Banco de dados indisponivel", http.StatusServiceUnavailable)
+      		return
+      	}
+      	if err := s.rdb.Ping(ctx).Err(); err != nil {
+      		http.Error(w, "Fila indisponivel", http.StatusServiceUnavailable)
+      		return
+      	}
+      	escreverJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+      }
+
+      // ---------- POST /telemetria ----------
+
+      func (s *servidorAPI) telemetria(w http.ResponseWriter, r *http.Request) {
+      	r.Body = http.MaxBytesReader(w, r.Body, 8<<20)
+      	var lote loteEntrada
+      	if err := json.NewDecoder(r.Body).Decode(&lote); err != nil {
+      		http.Error(w, "Payload de telemetria invalido", http.StatusBadRequest)
+      		return
+      	}
+      	recebidas := len(lote.Measurements)
+      	if recebidas == 0 {
+      		http.Error(w, "Lote de medidas vazio", http.StatusBadRequest)
+      		return
+      	}
+
+      	aceitas, soma := processarLote(lote.Measurements)
+      	rejeitadas := recebidas - len(aceitas)
+      	if len(aceitas) == 0 {
+      		escreverJSON(w, http.StatusBadRequest, map[string]any{
+      			"status":          "rejeitado",
+      			"total_recebido":  recebidas,
+      			"total_aceito":    0,
+      			"total_rejeitado": rejeitadas,
+      		})
+      		return
+      	}
+
+      	carga, err := json.Marshal(aceitas)
+      	if err != nil {
+      		http.Error(w, "Falha ao serializar lote", http.StatusInternalServerError)
+      		return
+      	}
+
+      	// O 202 só é emitido depois que o Redis confirma o XADD (com AOF ligado, a
+      	// escrita já está no log). Se a fila estiver indisponível ou cheia, o hub
+      	// recebe 503 e retransmite: a perda nunca é silenciosa.
+      	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+      	defer cancel()
+      	err = s.rdb.XAdd(ctx, &redis.XAddArgs{
+      		Stream: chaveStream,
+      		Values: []any{"d", carga},
+      	}).Err()
+      	if err != nil {
+      		log.Printf("aviso: falha ao enfileirar lote: %v", err)
+      		http.Error(w, "Fila indisponivel", http.StatusServiceUnavailable)
+      		return
+      	}
+
+      	escreverJSON(w, http.StatusAccepted, respostaIngestao{
+      		Status:          "aceito",
+      		SensorID:        aceitas[0].Sensor,
+      		TotalRecebido:   recebidas,
+      		TotalAceito:     len(aceitas),
+      		TotalPersistido: len(aceitas), // persistido no log durável; gravação no banco é assíncrona
+      		TotalRejeitado:  rejeitadas,
+      		HumidexMedio:    soma / float64(len(aceitas)),
+      	})
+      }
+
+      // ---------- GET /indice-calor/{sensor_id} ----------
+
+      func (s *servidorAPI) indiceCalor(w http.ResponseWriter, r *http.Request) {
+      	sensorID := r.PathValue("sensor_id")
+      	if sensorID == "" || len(sensorID) > 64 {
+      		http.Error(w, "sensor_id obrigatorio", http.StatusBadRequest)
+      		return
+      	}
+      	ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+      	defer cancel()
+
+      	// 1) cache. Qualquer erro do Redis degrada para o banco, nunca para 5xx.
+      	if v, err := s.rdb.Get(ctx, chaveIndice(sensorID)).Result(); err == nil {
+      		if soma, n, ok := decodificarAgregado(v); ok {
+      			responderIndice(w, sensorID, soma, n)
+      			return
+      		}
+      	}
+
+      	// 2) fonte da verdade
+      	var soma float64
+      	var amostras int64
+      	err := s.pg.QueryRow(ctx,
+      		`SELECT soma, amostras FROM agregados_sensor WHERE sensor_id = $$1`, sensorID,
+      	).Scan(&soma, &amostras)
+      	if errors.Is(err, pgx.ErrNoRows) {
+      		http.Error(w, "Nenhuma medicao encontrada para o sensor", http.StatusNotFound)
+      		return
+      	}
+      	if err != nil {
+      		http.Error(w, "Falha ao consultar indice", http.StatusInternalServerError)
+      		return
+      	}
+      	_ = gravarIndiceCache(ctx, s.rdb, sensorID, soma, amostras) // melhor esforço
+      	responderIndice(w, sensorID, soma, amostras)
+      }
+
+      func responderIndice(w http.ResponseWriter, sensorID string, soma float64, amostras int64) {
+      	escreverJSON(w, http.StatusOK, map[string]any{
+      		"sensor_id":     sensorID,
+      		"humidex_medio": soma / float64(amostras),
+      		"amostras":      amostras,
+      	})
+      }
+
+      // ---------- GET /audit/contagem ----------
+
+      // total_indices é o número de medições cujo índice já compõe o agregado do
+      // sensor (soma de "amostras"). Como medição e agregado são gravados na mesma
+      // transação, os dois totais coincidem em qualquer instante observável.
+      func (s *servidorAPI) auditContagem(w http.ResponseWriter, r *http.Request) {
+      	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+      	defer cancel()
+      	var medicoes, indices int64
+      	err := s.pg.QueryRow(ctx, `
+      		SELECT (SELECT count(*) FROM medicoes),
+      		       (SELECT COALESCE(sum(amostras), 0)::bigint FROM agregados_sensor)`,
+      	).Scan(&medicoes, &indices)
+      	if err != nil {
+      		http.Error(w, "erro de auditoria", http.StatusInternalServerError)
+      		return
+      	}
+      	escreverJSON(w, http.StatusOK, map[string]int64{
+      		"total_medicoes": medicoes,
+      		"total_indices":  indices,
+      	})
+      }
+
+      // ---------- GET /audit/medidas ----------
+
+      // O cursor é o id da última linha da página anterior (opaco para o cliente).
+      // Os workers serializam a gravação por advisory lock, então os ids visíveis
+      // formam um prefixo contínuo e a paginação por id não pula linhas.
+      func (s *servidorAPI) auditMedidas(w http.ResponseWriter, r *http.Request) {
+      	limite := 1000
+      	if v, err := strconv.Atoi(r.URL.Query().Get("limit")); err == nil && v > 0 && v <= 5000 {
+      		limite = v
+      	}
+      	var cursor int64
+      	if c := r.URL.Query().Get("cursor"); c != "" {
+      		n, err := strconv.ParseInt(c, 10, 64)
+      		if err != nil || n < 0 {
+      			http.Error(w, "cursor invalido", http.StatusBadRequest)
+      			return
+      		}
+      		cursor = n
+      	}
+
+      	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
+      	defer cancel()
+      	linhas, err := s.pg.Query(ctx, `
+      		SELECT id, sensor_id, timestamp, raw_packet, hash
+      		  FROM medicoes
+      		 WHERE id > $$1
+      		 ORDER BY id
+      		 LIMIT $$2`, cursor, limite)
+      	if err != nil {
+      		http.Error(w, "erro de auditoria", http.StatusInternalServerError)
+      		return
+      	}
+      	defer linhas.Close()
+
+      	medidas := make([]medidaAuditoria, 0, limite)
+      	for linhas.Next() {
+      		var m medidaAuditoria
+      		var ts time.Time
+      		if err := linhas.Scan(&m.ID, &m.SensorID, &ts, &m.RawPacket, &m.Hash); err != nil {
+      			http.Error(w, "erro de auditoria", http.StatusInternalServerError)
+      			return
+      		}
+      		m.Timestamp = timestampCanonico(ts)
+      		medidas = append(medidas, m)
+      	}
+      	if err := linhas.Err(); err != nil {
+      		http.Error(w, "erro de auditoria", http.StatusInternalServerError)
+      		return
+      	}
+
+      	proximo := ""
+      	if len(medidas) == limite {
+      		proximo = strconv.FormatInt(medidas[len(medidas)-1].ID, 10)
+      	}
+      	escreverJSON(w, http.StatusOK, map[string]any{
+      		"medidas":        medidas,
+      		"proximo_cursor": proximo,
+      	})
+      }
+
+      // ---------- bootstrap ----------
+
+      func executarAPI(ctx context.Context) {
+      	pg, err := abrirPostgres(ctx, int32(envInt("DB_MAX_CONNS", 3)))
+      	if err != nil {
+      		log.Fatalf("api: %v", err)
+      	}
+      	defer pg.Close()
+      	rdb, err := abrirRedis(ctx, envInt("REDIS_POOL", 8))
+      	if err != nil {
+      		log.Fatalf("api: %v", err)
+      	}
+      	defer rdb.Close()
+
+      	s := &servidorAPI{pg: pg, rdb: rdb}
+      	mux := http.NewServeMux()
+      	mux.HandleFunc("GET /health", s.health)
+      	mux.HandleFunc("POST /telemetria", s.telemetria)
+      	mux.HandleFunc("GET /indice-calor/{sensor_id}", s.indiceCalor)
+      	mux.HandleFunc("GET /audit/contagem", s.auditContagem)
+      	mux.HandleFunc("GET /audit/medidas", s.auditMedidas)
+
+      	srv := &http.Server{
+      		Addr:              envString("LISTEN_ADDR", ":8080"),
+      		Handler:           mux,
+      		ReadHeaderTimeout: 5 * time.Second,
+      		ReadTimeout:       15 * time.Second,
+      		WriteTimeout:      35 * time.Second,
+      		IdleTimeout:       120 * time.Second,
+      	}
+      	go func() {
+      		<-ctx.Done()
+      		sctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+      		defer cancel()
+      		_ = srv.Shutdown(sctx)
+      	}()
+
+      	log.Printf("api ouvindo em %s", srv.Addr)
+      	if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+      		log.Fatalf("api: %v", err)
+      	}
+      }
+      EOF_API_GO
+      COPY <<'EOF_WORKER_GO' /src/worker.go
+      package main
+
+      // worker.go — papel "worker": consome a fila durável e grava no PostgreSQL.
+      //
+      // Garantias:
+      //   - Entrega "pelo menos uma vez": a mensagem só sai da fila (XACK + XDEL)
+      //     depois que a transação do banco confirmou.
+      //   - Idempotência: ON CONFLICT (sensor_id, timestamp) DO NOTHING impede
+      //     duplicata; o agregado só é atualizado com as linhas realmente
+      //     inseridas, então uma reentrega não conta a mesma medição duas vezes.
+      //   - Recuperação: mensagens pendentes do próprio consumidor são relidas na
+      //     partida, e as de consumidores mortos são resgatadas por XAUTOCLAIM.
+      //   - Ordem de ids: a transação de gravação adquire um advisory lock, de modo
+      //     que os ids da tabela são atribuídos e confirmados na mesma ordem. A
+      //     paginação por cursor de id, em /audit/medidas, depende disso.
+
+      import (
+      	"context"
+      	"encoding/json"
+      	"errors"
+      	"fmt"
+      	"log"
+      	"os"
+      	"time"
+
+      	"github.com/jackc/pgx/v5"
+      	"github.com/jackc/pgx/v5/pgxpool"
+      	"github.com/redis/go-redis/v9"
+      )
+
+      // chaveLockGravacao identifica o advisory lock que serializa as gravações.
+      const chaveLockGravacao = 7301
+
+      // Uma única instrução: insere as medições (ignorando duplicatas) e soma ao
+      // agregado do sensor apenas o que foi realmente inserido. unnest transforma
+      // sete arrays em linhas, trocando N INSERTs por uma ida ao banco.
+      const sqlInserirLote = `
+      WITH entrada AS (
+          SELECT * FROM unnest(
+              $$1::text[], $$2::timestamptz[], $$3::text[], $$4::text[],
+              $$5::float8[], $$6::float8[], $$7::float8[]
+          ) AS t(sensor_id, ts, raw_packet, hash, temperatura, umidade, humidex)
+      ), novas AS (
+          INSERT INTO medicoes (sensor_id, timestamp, raw_packet, hash, temperatura, umidade, humidex)
+          SELECT sensor_id, ts, raw_packet, hash, temperatura, umidade, humidex FROM entrada
+          ON CONFLICT (sensor_id, timestamp) DO NOTHING
+          RETURNING sensor_id, humidex
+      )
+      INSERT INTO agregados_sensor AS a (sensor_id, soma, amostras)
+      SELECT sensor_id, sum(humidex), count(*) FROM novas GROUP BY sensor_id
+      ON CONFLICT (sensor_id) DO UPDATE
+          SET soma = a.soma + EXCLUDED.soma,
+              amostras = a.amostras + EXCLUDED.amostras`
+
+      // Lê o agregado final de todos os sensores do lote, inclusive os que só
+      // tiveram duplicatas (reentrega), para manter o cache sempre coerente.
+      const sqlLerAgregados = `
+      SELECT sensor_id, soma, amostras FROM agregados_sensor WHERE sensor_id = ANY($$1::text[])`
+
+      type colunasLote struct {
+      	sensores []string
+      	ts       []time.Time
+      	raws     []string
+      	hashes   []string
+      	temps    []float64
+      	umids    []float64
+      	humidex  []float64
+      }
+
+      func (c *colunasLote) adicionar(m medicaoProcessada) {
+      	c.sensores = append(c.sensores, m.Sensor)
+      	c.ts = append(c.ts, time.UnixMicro(m.TsMicro).UTC())
+      	c.raws = append(c.raws, m.Raw)
+      	c.hashes = append(c.hashes, m.Hash)
+      	c.temps = append(c.temps, m.Temp)
+      	c.umids = append(c.umids, m.Umid)
+      	c.humidex = append(c.humidex, m.Humidex)
+      }
+
+      type agregado struct {
+      	sensor   string
+      	soma     float64
+      	amostras int64
+      }
+
+      type trabalhador struct {
+      	pg         *pgxpool.Pool
+      	rdb        *redis.Client
+      	consumidor string
+      	maxMsgs    int64
+
+      	lotes, medicoes int64
+      	ultimoLog       time.Time
+      }
+
+      func executarWorker(ctx context.Context) {
+      	pg, err := abrirPostgres(ctx, int32(envInt("DB_MAX_CONNS", 2)))
+      	if err != nil {
+      		log.Fatalf("worker: %v", err)
+      	}
+      	defer pg.Close()
+      	rdb, err := abrirRedis(ctx, 4)
+      	if err != nil {
+      		log.Fatalf("worker: %v", err)
+      	}
+      	defer rdb.Close()
+
+      	nome, _ := os.Hostname()
+      	w := &trabalhador{
+      		pg:         pg,
+      		rdb:        rdb,
+      		consumidor: envString("CONSUMER", nome),
+      		maxMsgs:    int64(envInt("WORKER_BATCH_MSGS", 100)),
+      		ultimoLog:  time.Now(),
+      	}
+
+      	// Cria o grupo (e o stream, se ainda não existir). BUSYGROUP significa que
+      	// outro worker já o criou, o que é esperado.
+      	err = rdb.XGroupCreateMkStream(ctx, chaveStream, grupoWorkers, "0").Err()
+      	if err != nil && err.Error() != "BUSYGROUP Consumer Group name already exists" {
+      		log.Fatalf("worker: falha ao criar grupo: %v", err)
+      	}
+
+      	log.Printf("worker %s pronto (lote de ate %d mensagens)", w.consumidor, w.maxMsgs)
+      	w.laco(ctx)
+      	log.Printf("worker %s encerrado", w.consumidor)
+      }
+
+      func (w *trabalhador) laco(ctx context.Context) {
+      	pendentes := true // na partida, primeiro relê o que ficou sem XACK
+      	ultimoResgate := time.Now()
+      	falhas := 0
+
+      	for ctx.Err() == nil {
+      		var (
+      			msgs []redis.XMessage
+      			err  error
+      		)
+      		switch {
+      		case pendentes:
+      			msgs, err = w.lerMensagens(ctx, "0", -1)
+      			if err == nil && len(msgs) == 0 {
+      				pendentes = false
+      				continue
+      			}
+      		case time.Since(ultimoResgate) > 15*time.Second:
+      			ultimoResgate = time.Now()
+      			msgs, err = w.resgatarOciosos(ctx)
+      			if err == nil && len(msgs) == 0 {
+      				continue
+      			}
+      		default:
+      			msgs, err = w.lerMensagens(ctx, ">", time.Second)
+      		}
+
+      		if err == nil && len(msgs) > 0 {
+      			err = w.processar(ctx, msgs)
+      			if err == nil {
+      				falhas = 0
+      			}
+      		}
+      		if err != nil {
+      			if ctx.Err() != nil {
+      				return
+      			}
+      			falhas++
+      			espera := time.Duration(min(falhas, 5)) * time.Second
+      			log.Printf("worker %s: falha (tentativa %d), nova tentativa em %s: %v",
+      				w.consumidor, falhas, espera, err)
+      			pendentes = true // reler as pendentes: nada foi confirmado
+      			select {
+      			case <-ctx.Done():
+      				return
+      			case <-time.After(espera):
+      			}
+      		}
+      	}
+      }
+
+      // lerMensagens lê do grupo. Com id "0" devolve as pendentes do consumidor;
+      // com ">" devolve as novas, bloqueando até "bloqueio" (negativo = não bloqueia).
+      func (w *trabalhador) lerMensagens(ctx context.Context, id string, bloqueio time.Duration) ([]redis.XMessage, error) {
+      	res, err := w.rdb.XReadGroup(ctx, &redis.XReadGroupArgs{
+      		Group:    grupoWorkers,
+      		Consumer: w.consumidor,
+      		Streams:  []string{chaveStream, id},
+      		Count:    w.maxMsgs,
+      		Block:    bloqueio,
+      	}).Result()
+      	if errors.Is(err, redis.Nil) {
+      		return nil, nil
+      	}
+      	if err != nil {
+      		return nil, err
+      	}
+      	var msgs []redis.XMessage
+      	for _, s := range res {
+      		msgs = append(msgs, s.Messages...)
+      	}
+      	return msgs, nil
+      }
+
+      // resgatarOciosos assume mensagens entregues a outro consumidor que não deu
+      // XACK há mais de 30 s (consumidor morto ou travado).
+      func (w *trabalhador) resgatarOciosos(ctx context.Context) ([]redis.XMessage, error) {
+      	msgs, _, err := w.rdb.XAutoClaim(ctx, &redis.XAutoClaimArgs{
+      		Stream:   chaveStream,
+      		Group:    grupoWorkers,
+      		Consumer: w.consumidor,
+      		MinIdle:  30 * time.Second,
+      		Start:    "0-0",
+      		Count:    w.maxMsgs,
+      	}).Result()
+      	if errors.Is(err, redis.Nil) {
+      		return nil, nil
+      	}
+      	return msgs, err
+      }
+
+      func (w *trabalhador) processar(ctx context.Context, msgs []redis.XMessage) error {
+      	// O lote em curso termina mesmo que o contêiner receba SIGTERM.
+      	pctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), 30*time.Second)
+      	defer cancel()
+
+      	var cols colunasLote
+      	ids := make([]string, 0, len(msgs))
+      	for _, m := range msgs {
+      		ids = append(ids, m.ID)
+      		bruto, _ := m.Values["d"].(string)
+      		var itens []medicaoProcessada
+      		if err := json.Unmarshal([]byte(bruto), &itens); err != nil || len(itens) == 0 {
+      			// Mensagem veneno: guarda para inspeção e segue, em vez de travar.
+      			log.Printf("worker %s: mensagem %s ilegivel, movida para %s", w.consumidor, m.ID, chaveMortos)
+      			if e := w.rdb.XAdd(pctx, &redis.XAddArgs{
+      				Stream: chaveMortos, Values: []any{"id_origem", m.ID, "d", bruto},
+      			}).Err(); e != nil {
+      				return fmt.Errorf("mover mensagem veneno: %w", e)
+      			}
+      			continue
+      		}
+      		for _, it := range itens {
+      			cols.adicionar(it)
+      		}
+      	}
+
+      	var agregados []agregado
+      	if len(cols.sensores) > 0 {
+      		var err error
+      		agregados, err = w.gravar(pctx, &cols)
+      		if err != nil {
+      			return fmt.Errorf("gravar no postgres: %w", err)
+      		}
+      	}
+
+      	// Só agora, com o banco confirmado: atualiza o cache e retira da fila.
+      	pipe := w.rdb.Pipeline()
+      	for _, a := range agregados {
+      		scriptGravarIndice.Eval(pctx, pipe, []string{chaveIndice(a.sensor)},
+      			codificarAgregado(a.soma, a.amostras), a.amostras, ttlCacheSegundos)
+      	}
+      	pipe.XAck(pctx, chaveStream, grupoWorkers, ids...)
+      	pipe.XDel(pctx, chaveStream, ids...)
+      	if _, err := pipe.Exec(pctx); err != nil {
+      		return fmt.Errorf("confirmar na fila: %w", err)
+      	}
+
+      	w.lotes += int64(len(msgs))
+      	w.medicoes += int64(len(cols.sensores))
+      	if time.Since(w.ultimoLog) >= 10*time.Second {
+      		log.Printf("worker %s: %d requisicoes / %d medicoes processadas", w.consumidor, w.lotes, w.medicoes)
+      		w.ultimoLog = time.Now()
+      	}
+      	return nil
+      }
+
+      // gravar executa a transação do lote: lock, inserção em massa e leitura dos
+      // agregados atualizados, tudo em uma única ida ao banco (pgx.Batch) e um
+      // único COMMIT (um fsync para centenas de medições).
+      func (w *trabalhador) gravar(ctx context.Context, c *colunasLote) ([]agregado, error) {
+      	tx, err := w.pg.Begin(ctx)
+      	if err != nil {
+      		return nil, err
+      	}
+      	defer tx.Rollback(ctx)
+
+      	unicos := make(map[string]struct{}, 64)
+      	for _, s := range c.sensores {
+      		unicos[s] = struct{}{}
+      	}
+      	lista := make([]string, 0, len(unicos))
+      	for s := range unicos {
+      		lista = append(lista, s)
+      	}
+
+      	b := &pgx.Batch{}
+      	b.Queue("SELECT pg_advisory_xact_lock($$1)", int64(chaveLockGravacao))
+      	b.Queue(sqlInserirLote, c.sensores, c.ts, c.raws, c.hashes, c.temps, c.umids, c.humidex)
+      	b.Queue(sqlLerAgregados, lista)
+      	br := tx.SendBatch(ctx, b)
+
+      	if _, err := br.Exec(); err != nil {
+      		_ = br.Close()
+      		return nil, err
+      	}
+      	if _, err := br.Exec(); err != nil {
+      		_ = br.Close()
+      		return nil, err
+      	}
+      	linhas, err := br.Query()
+      	if err != nil {
+      		_ = br.Close()
+      		return nil, err
+      	}
+      	agregados := make([]agregado, 0, len(lista))
+      	for linhas.Next() {
+      		var a agregado
+      		if err := linhas.Scan(&a.sensor, &a.soma, &a.amostras); err != nil {
+      			linhas.Close()
+      			_ = br.Close()
+      			return nil, err
+      		}
+      		agregados = append(agregados, a)
+      	}
+      	linhas.Close()
+      	if err := br.Close(); err != nil {
+      		return nil, err
+      	}
+      	if err := tx.Commit(ctx); err != nil {
+      		return nil, err
+      	}
+      	return agregados, nil
+      }
+      EOF_WORKER_GO
+      RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/app .
+
+      FROM alpine:3.20
+      COPY --from=builder /out/app /usr/local/bin/app
+      ENTRYPOINT ["/usr/local/bin/app"]
+  restart: on-failure
+  stop_grace_period: 20s
+
+services:
+  # ---------------------------------------------------------------- dados ---
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: iot
+      POSTGRES_PASSWORD: iot
+      POSTGRES_DB: telemetria
+    command:
+      - postgres
+      - -c
+      - max_connections=60
+      - -c
+      - shared_buffers=96MB
+      - -c
+      - wal_compression=on
+      - -c
+      - checkpoint_timeout=15min
+      - -c
+      - max_wal_size=1GB
+    configs:
+      - source: esquema_sql
+        target: /docker-entrypoint-initdb.d/01-esquema.sql
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: 384M
+    restart: on-failure
+    healthcheck:
+      # -h 127.0.0.1 força TCP: durante o initdb o servidor temporário escuta só
+      # no socket Unix, e um pg_isready sem host declararia "pronto" cedo demais.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U iot -d telemetria"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+      start_interval: 1s
+
+  redis:
+    image: redis:7.4-alpine
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+      - --appendfsync
+      - everysec
+      - --auto-aof-rewrite-min-size
+      - 512mb
+      - --save
+      - ""
+      - --maxmemory
+      - 200mb
+      - --maxmemory-policy
+      - noeviction
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 256M
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 2s
+      start_interval: 1s
+
+  # ----------------------------------------------------------- aplicação ---
+
+  api-1:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: api
+      CONSUMER: api-1
+      DB_MAX_CONNS: "3"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api-2:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: api
+      CONSUMER: api-2
+      DB_MAX_CONNS: "3"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api-3:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: api
+      CONSUMER: api-3
+      DB_MAX_CONNS: "3"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api-4:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: api
+      CONSUMER: api-4
+      DB_MAX_CONNS: "3"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api-5:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: api
+      CONSUMER: api-5
+      DB_MAX_CONNS: "3"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api-6:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: api
+      CONSUMER: api-6
+      DB_MAX_CONNS: "3"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker-1:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: worker
+      CONSUMER: worker-1
+      DB_MAX_CONNS: "2"
+      WORKER_BATCH_MSGS: "100"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker-2:
+    <<: *servico-go
+    environment:
+      <<: *ambiente-go
+      ROLE: worker
+      CONSUMER: worker-2
+      DB_MAX_CONNS: "2"
+      WORKER_BATCH_MSGS: "100"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ---------------------------------------------------------------- borda ---
+  gateway:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:8080"
+    configs:
+      - source: nginx_conf
+        target: /etc/nginx/nginx.conf
+    networks:
+      default:
+      aps-net:
+        aliases: [aps-app]
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 128M
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      start_interval: 1s
+    depends_on:
+      api-1:
+        condition: service_healthy
+      api-2:
+        condition: service_healthy
+      api-3:
+        condition: service_healthy
+      api-4:
+        condition: service_healthy
+      api-5:
+        condition: service_healthy
+      api-6:
+        condition: service_healthy
+
+configs:
+  esquema_sql:
+    content: |
+      -- ============================================================
+      -- schema.sql — esquema do Cenário B (arquitetura distribuída)
+      --
+      -- Executado uma única vez pelo próprio contêiner do PostgreSQL, na primeira
+      -- inicialização (diretório /docker-entrypoint-initdb.d). Não altera o init.sql
+      -- do kit base, que é imutável e continua servindo ao Cenário A.
+      --
+      -- Diferenças em relação ao esquema do monolito:
+      --   * medicoes guarda também temperatura, umidade e o Humidex de cada medição;
+      --   * agregados_sensor mantém soma e contagem por sensor, atualizadas na mesma
+      --     transação da inserção. A rota de leitura deixa de calcular AVG() sobre
+      --     um conjunto de linhas que cresce a cada ingestão.
+      -- ============================================================
+
+      CREATE TABLE IF NOT EXISTS medicoes (
+          id           BIGSERIAL        PRIMARY KEY,
+          sensor_id    TEXT             NOT NULL,
+          timestamp    TIMESTAMPTZ      NOT NULL,
+          raw_packet   TEXT             NOT NULL,
+          hash         TEXT             NOT NULL,
+          temperatura  DOUBLE PRECISION NOT NULL,
+          umidade      DOUBLE PRECISION NOT NULL,
+          humidex      DOUBLE PRECISION NOT NULL,
+          criado_em    TIMESTAMPTZ      NOT NULL DEFAULT now(),
+          -- Regra de unicidade do contrato: um par (sensor, instante) por linha.
+          -- O ON CONFLICT do worker depende desta restrição para ser idempotente.
+          CONSTRAINT medicoes_sensor_timestamp_uniq UNIQUE (sensor_id, timestamp)
+      );
+
+      CREATE TABLE IF NOT EXISTS agregados_sensor (
+          sensor_id  TEXT             PRIMARY KEY,
+          soma       DOUBLE PRECISION NOT NULL,
+          amostras   BIGINT           NOT NULL CHECK (amostras > 0)
+      );
+  nginx_conf:
+    content: |
+      # ============================================================
+      # nginx.conf — borda do Cenário B (balanceador de carga)
+      #
+      # Termina o HTTP na porta 8080 (a única publicada) e distribui as requisições
+      # entre as instâncias da API. Gerado por ferramentas/gerar_compose.py: a lista
+      # "upstream" acompanha o número de instâncias declarado no compose.
+      # ============================================================
+      worker_processes 1;
+      worker_rlimit_nofile 16384;
+      pid /tmp/nginx.pid;
+      error_log /dev/stderr warn;
+
+      events {
+          worker_connections 8192;
+          multi_accept on;
+      }
+
+      http {
+          access_log off;                 # log por requisição custaria CPU da cota
+          server_tokens off;
+          sendfile on;
+          tcp_nodelay on;
+
+          client_max_body_size 8m;
+          client_body_buffer_size 1m;     # lotes de 10 a 60 medições (~5 a 15 KB) ficam em memória
+          keepalive_timeout 120s;
+          keepalive_requests 100000;
+
+          upstream api {
+              # least_conn: a próxima requisição vai para a instância com menos
+              # conexões ativas. Com cota de 0.05 vCPU por instância, round-robin
+              # puro empilharia trabalho em uma instância já estrangulada pelo CFS.
+              least_conn;
+              server api-1:8080 max_fails=0;
+              server api-2:8080 max_fails=0;
+              server api-3:8080 max_fails=0;
+              server api-4:8080 max_fails=0;
+              server api-5:8080 max_fails=0;
+              server api-6:8080 max_fails=0;
+              keepalive 128;              # reaproveita conexões nginx -> API
+          }
+
+          server {
+              listen 8080 backlog=4096;
+
+              location / {
+                  proxy_pass http://api;
+                  proxy_http_version 1.1;
+                  proxy_set_header Connection "";
+                  proxy_set_header Host $$host;
+                  proxy_buffering on;
+
+                  proxy_connect_timeout 1s;
+                  proxy_send_timeout 10s;
+                  proxy_read_timeout 10s;
+
+                  # Se uma instância falhar, outra atende. A ingestão é idempotente
+                  # (UNIQUE sensor+timestamp), então repetir um POST é seguro.
+                  proxy_next_upstream error timeout http_502 http_503 non_idempotent;
+                  proxy_next_upstream_tries 3;
+              }
+          }
+      }
+
+networks:
+  aps-net:
+    external: true

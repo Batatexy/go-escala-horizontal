@@ -1,0 +1,12 @@
+Cenario A
+Compose: docker-compose.monolito.yaml
+Execucao: 20261106_183000
+
+Enviados:    109900
+Rejeitados:  82070
+Gravados:    27979
+Taxa persistencia: 25.46%
+Divergentes: 0
+Fantasmas:   0
+Perdidas:    81921
+Duplicatas:  0

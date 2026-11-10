@@ -1,0 +1,19 @@
+metrica;Cenário A (kit, PG 0,8);Variante A′ (PG 0,08);Cenário B (distribuído)
+Rodadas consideradas;3;3;3
+Soma de limits.cpus (vCPU);0.85;0.13;0.75
+Vazão do gerador (req/s);78.54 ± 0.02;77.12 ± 0.06;78.58 ± 0.00
+Taxa de sucesso POST /telemetria (%);100.00 ± 0.00;99.53 ± 0.21;100.00 ± 0.00
+Taxa de sucesso GET /indice-calor (%);100.00 ± 0.00;99.63 ± 0.07;100.00 ± 0.00
+Iterações descartadas pelo k6;5 ± 3;212 ± 10;0 ± 0
+Carga atendida (%);100.0 ± 0.0;98.1 ± 0.1;100.0 ± 0.0
+Latência p95 (ms) [informativo];130.7 ± 38.8;1676.7 ± 255.9;0.5 ± 0.0
+Registros enviados;29871 ± 55;29486 ± 324;29617 ± 226
+Registros gravados;29871 ± 55;29332 ± 369;29617 ± 226
+Taxa de persistência (%);100.00 ± 0.00;99.48 ± 0.16;100.00 ± 0.00
+Divergentes / Fantasmas / Perdidas / Duplicatas;0 / 0 / 0 / 0 (soma);0 / 0 / 463 / 0 (soma);0 / 0 / 0 / 0 (soma)
+Leituras sem dado (404);0 ± 0;7 ± 9;0 ± 0
+Vazão útil (registros gravados/s);206.0 ± 0.4;202.3 ± 2.5;204.3 ± 1.6
+IEV nominal (registros/s por vCPU alocada);242.4 ± 0.4;1556.0 ± 19.6;272.3 ± 2.1
+CPU efetivamente consumida (vCPU, docker stats);0.075 ± 0.007;0.075 ± 0.002;0.050 ± 0.002
+IEV medido (registros/s por vCPU consumida);2757 ± 257;2713 ± 64;4117 ± 191
+Nota do avaliador (0–10);10.00 ± 0.00;9.95 ± 0.02;10.00 ± 0.00

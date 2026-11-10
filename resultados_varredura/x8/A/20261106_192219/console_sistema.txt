@@ -1,0 +1,170 @@
+db-init-1  | CREATE TABLE
+db-init-1  | CREATE INDEX
+db-init-1  | CREATE INDEX
+db-init-1  | CREATE TABLE
+postgres-1  | The files belonging to this database system will be owned by user "postgres".
+postgres-1  | This user must also own the server process.
+postgres-1  | 
+postgres-1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres-1  | The default database encoding has accordingly been set to "UTF8".
+postgres-1  | The default text search configuration will be set to "english".
+postgres-1  | 
+postgres-1  | Data page checksums are disabled.
+postgres-1  | 
+postgres-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres-1  | creating subdirectories ... ok
+postgres-1  | selecting dynamic shared memory implementation ... posix
+postgres-1  | selecting default max_connections ... 100
+postgres-1  | selecting default shared_buffers ... 128MB
+postgres-1  | selecting default time zone ... UTC
+postgres-1  | creating configuration files ... ok
+postgres-1  | running bootstrap script ... ok
+postgres-1  | sh: locale: not found
+postgres-1  | 2026-11-06 22:22:20.241 UTC [35] WARNING:  no usable system locales were found
+postgres-1  | performing post-bootstrap initialization ... ok
+postgres-1  | syncing data to disk ... ok
+postgres-1  | 
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1  | 
+postgres-1  | Success. You can now start the database server using:
+postgres-1  | 
+postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres-1  | 
+postgres-1  | waiting for server to start....2026-11-06 22:22:21.480 UTC [41] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 22:22:21.481 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 22:22:21.485 UTC [44] LOG:  database system was shut down at 2026-11-06 22:22:20 UTC
+postgres-1  | 2026-11-06 22:22:21.489 UTC [41] LOG:  database system is ready to accept connections
+postgres-1  |  done
+postgres-1  | server started
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres-1  | 
+postgres-1  | waiting for server to shut down....2026-11-06 22:22:21.611 UTC [41] LOG:  received fast shutdown request
+postgres-1  | 2026-11-06 22:22:21.612 UTC [41] LOG:  aborting any active transactions
+postgres-1  | 2026-11-06 22:22:21.613 UTC [41] LOG:  background worker "logical replication launcher" (PID 47) exited with exit code 1
+postgres-1  | 2026-11-06 22:22:21.613 UTC [42] LOG:  shutting down
+postgres-1  | 2026-11-06 22:22:21.615 UTC [42] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-11-06 22:22:21.889 UTC [42] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.019 s, sync=0.251 s, total=0.276 s; sync files=301, longest=0.002 s, average=0.001 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D60, redo lsn=0/1925D60
+postgres-1  | 2026-11-06 22:22:21.893 UTC [41] LOG:  database system is shut down
+postgres-1  |  done
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-11-06 22:22:21.927 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 22:22:21.927 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-11-06 22:22:21.927 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-11-06 22:22:21.928 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 22:22:21.931 UTC [57] LOG:  database system was shut down at 2026-11-06 22:22:21 UTC
+postgres-1  | 2026-11-06 22:22:21.935 UTC [1] LOG:  database system is ready to accept connections
+postgres-1  | 2026-11-06 22:23:04.405 UTC [118] LOG:  PID 70 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:04.406 UTC [119] LOG:  PID 70 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:06.006 UTC [130] LOG:  PID 98 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:06.006 UTC [129] LOG:  PID 98 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:07.115 UTC [133] LOG:  PID 117 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:07.303 UTC [134] LOG:  PID 116 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:10.004 UTC [148] LOG:  PID 143 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:10.703 UTC [151] LOG:  PID 140 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:10.704 UTC [150] LOG:  PID 140 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:12.203 UTC [163] LOG:  PID 158 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:16.404 UTC [182] LOG:  PID 162 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:16.404 UTC [181] LOG:  PID 162 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:16.404 UTC [180] LOG:  PID 168 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:19.223 UTC [196] LOG:  PID 188 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:19.223 UTC [195] LOG:  PID 188 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:27.605 UTC [243] LOG:  PID 237 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:27.605 UTC [242] LOG:  PID 213 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:27.605 UTC [241] LOG:  PID 213 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:28.903 UTC [247] LOG:  PID 219 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:35.005 UTC [266] LOG:  PID 252 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:35.005 UTC [265] LOG:  PID 252 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:35.005 UTC [262] LOG:  PID 223 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:35.005 UTC [261] LOG:  PID 223 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:37.119 UTC [279] LOG:  PID 275 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:41.903 UTC [300] LOG:  PID 289 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:42.305 UTC [303] LOG:  PID 292 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:42.305 UTC [302] LOG:  PID 292 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:43.904 UTC [308] LOG:  PID 299 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:44.703 UTC [311] LOG:  PID 306 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:58.305 UTC [373] LOG:  PID 360 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:58.306 UTC [372] LOG:  PID 360 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:58.708 UTC [376] LOG:  PID 368 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:58.708 UTC [377] LOG:  PID 368 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:59.104 UTC [381] LOG:  PID 367 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:23:59.105 UTC [380] LOG:  PID 367 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:02.003 UTC [403] LOG:  PID 394 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:02.003 UTC [402] LOG:  PID 394 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:03.104 UTC [404] LOG:  PID 398 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:06.307 UTC [419] LOG:  PID 406 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:08.806 UTC [427] LOG:  PID 420 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:12.006 UTC [436] LOG:  PID 428 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:12.006 UTC [435] LOG:  PID 428 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:12.006 UTC [432] LOG:  PID 422 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:12.006 UTC [431] LOG:  PID 422 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:14.505 UTC [446] LOG:  PID 440 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:20.104 UTC [462] LOG:  PID 444 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:20.104 UTC [461] LOG:  PID 444 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:26.005 UTC [479] LOG:  PID 468 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:29.903 UTC [482] LOG:  PID 478 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:29.904 UTC [485] LOG:  PID 469 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:29.904 UTC [484] LOG:  PID 480 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:30.013 UTC [488] LOG:  PID 477 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:30.013 UTC [487] LOG:  PID 481 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:30.013 UTC [486] LOG:  PID 469 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:30.603 UTC [490] LOG:  PID 483 in cancel request did not match any process
+postgres-1  | 2026-11-06 22:24:33.013 UTC [502] LOG:  PID 498 in cancel request did not match any process
+postgres-1          | 2026-11-06 22:24:33.626 UTC [504] LOG:  PID 499 in cancel request did not match any process
+postgres-1          | 2026-11-06 22:24:36.003 UTC [515] LOG:  PID 500 in cancel request did not match any process
+sistema-monolito-1  | 2026/11/06 22:22:26 servico de telemetria ouvindo em :8080
+sistema-monolito-1  | 2026/11/06 22:22:37 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000143: context canceled
+sistema-monolito-1  | 2026/11/06 22:22:38 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-000175: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:03 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100213: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:03 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100176: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:03 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100235: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:09 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001042: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:10 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001075: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:11 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001127: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:13 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001148: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:13 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001189: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:15 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001201: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:16 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001202: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:19 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001353: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:20 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001383: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:20 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001402: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:21 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001421: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:23 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001464: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:25 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-100634: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:27 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001579: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:34 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-001792: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:41 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002066: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:42 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002051: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:44 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002151: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:47 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002261: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:49 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002304: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:49 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002312: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:51 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002378: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:53 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002453: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:55 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002476: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:57 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-101493: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:59 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002625: context canceled
+sistema-monolito-1  | 2026/11/06 22:23:59 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-101800: context canceled
+postgres-1          | 2026-11-06 22:24:56.804 UTC [582] LOG:  PID 556 in cancel request did not match any process
+postgres-1          | 2026-11-06 22:24:56.804 UTC [583] LOG:  PID 546 in cancel request did not match any process
+sistema-monolito-1  | 2026/11/06 22:24:00 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002664: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:01 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-101876: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:11 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002984: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:11 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-002994: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:12 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003007: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:18 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003178: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:29 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003567: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:33 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003717: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:39 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003913: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:41 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003960: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:41 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003992: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:42 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003994: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:42 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-003981: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:42 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-004022: context canceled
+sistema-monolito-1  | 2026/11/06 22:24:42 aviso: falha ao atualizar indice do sensor SNS-5G-SEQ-004023: context canceled

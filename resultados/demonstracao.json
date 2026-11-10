@@ -1,0 +1,82 @@
+[
+  {
+    "funcionalidade": "Prontidão (RF1)",
+    "chamada": "GET /health",
+    "resposta": "HTTP 200 {\"status\":\"ok\"}"
+  },
+  {
+    "funcionalidade": "Ingestão de lote com 2 medições (RF2)",
+    "chamada": "POST /telemetria (2 medições)",
+    "resposta": "HTTP 202 {\"status\":\"aceito\",\"sensor_id\":\"SNS-5G-SEQ-000001\",\"total_recebido\":2,\"total_aceito\":2,\"total_persistido\":2,\"total_rejeitado\":0,\"humidex_medio\":35...."
+  },
+  {
+    "funcionalidade": "Persistência assíncrona: o lote aparece no banco (RF4)",
+    "chamada": "GET /audit/contagem",
+    "resposta": "HTTP 200 {\"total_indices\":2,\"total_medicoes\":2}"
+  },
+  {
+    "funcionalidade": "Idempotência: reenvio do mesmo lote não duplica",
+    "chamada": "POST /telemetria (mesmo lote) e depois GET /audit/contagem",
+    "resposta": "HTTP 200 {\"total_indices\":2,\"total_medicoes\":2}"
+  },
+  {
+    "funcionalidade": "Índice de calor: média e amostras (RF3)",
+    "chamada": "GET /indice-calor/SNS-5G-SEQ-000001",
+    "resposta": "HTTP 200 {\"amostras\":2,\"humidex_medio\":35.94871909802005,\"sensor_id\":\"SNS-5G-SEQ-000001\"}"
+  },
+  {
+    "funcionalidade": "Sensor sem medição: 404 é resposta válida (RF3)",
+    "chamada": "GET /indice-calor/SNS-5G-SEQ-999999",
+    "resposta": "HTTP 404 Nenhuma medicao encontrada para o sensor"
+  },
+  {
+    "funcionalidade": "Listagem paginada por cursor (RF5)",
+    "chamada": "GET /audit/medidas?limit=2&cursor=0",
+    "resposta": "HTTP 200 {\"medidas\":[{\"id\":1,\"sensor_id\":\"SNS-5G-SEQ-000001\",\"timestamp\":\"2026-10-23T14:32:05.123456Z\",\"raw_packet\":\"k3j9x2ab7c1\",\"hash\":\"bbcf77efecb3d9f696..."
+  },
+  {
+    "funcionalidade": "Verificação independente do hash (SHA-256)",
+    "chamada": "sha256(sensor_id + timestamp + raw_packet) por fora da aplicação",
+    "resposta": "hash recalculado == hash da API para as 2 medições: True"
+  },
+  {
+    "funcionalidade": "Rejeição parcial: medição inválida é contada, o resto segue",
+    "chamada": "POST /telemetria (1 válida + 1 timestamp inválido)",
+    "resposta": "HTTP 202 {\"status\":\"aceito\",\"sensor_id\":\"SNS-5G-SEQ-000002\",\"total_recebido\":2,\"total_aceito\":1,\"total_persistido\":1,\"total_rejeitado\":1,\"humidex_medio\":35...."
+  },
+  {
+    "funcionalidade": "Lote vazio",
+    "chamada": "POST /telemetria (lote vazio)",
+    "resposta": "HTTP 400 Lote de medidas vazio"
+  },
+  {
+    "funcionalidade": "JSON malformado",
+    "chamada": "POST /telemetria (corpo inválido)",
+    "resposta": "HTTP 400 Payload de telemetria invalido"
+  },
+  {
+    "funcionalidade": "Workers parados: a API continua aceitando (202)",
+    "chamada": "docker compose stop worker-1 worker-2; POST /telemetria",
+    "resposta": "HTTP 202 {\"status\":\"aceito\",\"sensor_id\":\"SNS-5G-SEQ-000003\",\"total_recebido\":1,\"total_aceito\":1,\"total_persistido\":1,\"total_rejeitado\":0,\"humidex_medio\":35...."
+  },
+  {
+    "funcionalidade": "Workers parados: nada é gravado enquanto isso",
+    "chamada": "GET /audit/contagem (workers parados)",
+    "resposta": "total_medicoes antes=3, durante=3 (inalterado: True)"
+  },
+  {
+    "funcionalidade": "Workers de volta: a fila é drenada, sem perda",
+    "chamada": "docker compose start worker-1 worker-2; GET /audit/contagem",
+    "resposta": "total_medicoes passou a 4 (esperado 4): True"
+  },
+  {
+    "funcionalidade": "Fila fora do ar: 503 explícito, sem perda silenciosa",
+    "chamada": "docker compose stop redis; POST /telemetria",
+    "resposta": "HTTP 503 Fila indisponivel"
+  },
+  {
+    "funcionalidade": "Fila de volta: o hub retransmite e o lote é aceito",
+    "chamada": "docker compose start redis; POST /telemetria (retransmissão)",
+    "resposta": "HTTP 202 {\"status\":\"aceito\",\"sensor_id\":\"SNS-5G-SEQ-000004\",\"total_recebido\":1,\"total_aceito\":1,\"total_persistido\":1,\"total_rejeitado\":0,\"humidex_medio\":35...."
+  }
+]

@@ -1,0 +1,116 @@
+worker-1-1  | 2026/11/06 22:25:30 worker worker-1 pronto (lote de ate 100 mensagens)
+worker-1-1  | 2026/11/06 22:25:40 worker worker-1: 73 requisicoes / 2641 medicoes processadas
+worker-1-1  | 2026/11/06 22:25:50 worker worker-1: 233 requisicoes / 8326 medicoes processadas
+worker-1-1  | 2026/11/06 22:26:00 worker worker-1: 407 requisicoes / 14368 medicoes processadas
+worker-1-1  | 2026/11/06 22:26:10 worker worker-1: 894 requisicoes / 31325 medicoes processadas
+worker-1-1  | 2026/11/06 22:26:20 worker worker-1: 1126 requisicoes / 39445 medicoes processadas
+worker-1-1  | 2026/11/06 22:26:30 worker worker-1: 1348 requisicoes / 47081 medicoes processadas
+worker-1-1  | 2026/11/06 22:26:40 worker worker-1: 1879 requisicoes / 66144 medicoes processadas
+worker-2-1  | 2026/11/06 22:25:31 worker worker-2 pronto (lote de ate 100 mensagens)
+worker-2-1  | 2026/11/06 22:25:41 worker worker-2: 94 requisicoes / 3125 medicoes processadas
+worker-2-1  | 2026/11/06 22:25:51 worker worker-2: 254 requisicoes / 8617 medicoes processadas
+worker-2-1  | 2026/11/06 22:26:01 worker worker-2: 457 requisicoes / 15404 medicoes processadas
+worker-2-1  | 2026/11/06 22:26:11 worker worker-2: 1011 requisicoes / 34831 medicoes processadas
+worker-2-1  | 2026/11/06 22:26:21 worker worker-2: 1187 requisicoes / 40790 medicoes processadas
+worker-2-1  | 2026/11/06 22:26:31 worker worker-2: 1453 requisicoes / 50418 medicoes processadas
+worker-2-1  | 2026/11/06 22:26:42 worker worker-2: 1938 requisicoes / 67266 medicoes processadas
+worker-2-1  | 2026/11/06 22:26:52 worker worker-2: 2098 requisicoes / 72977 medicoes processadas
+worker-2-1  | 2026/11/06 22:27:02 worker worker-2: 2424 requisicoes / 84275 medicoes processadas
+worker-2-1  | 2026/11/06 22:27:12 worker worker-2: 2793 requisicoes / 96928 medicoes processadas
+worker-2-1  | 2026/11/06 22:27:22 worker worker-2: 2953 requisicoes / 102409 medicoes processadas
+worker-2-1  | 2026/11/06 22:27:32 worker worker-2: 3113 requisicoes / 108199 medicoes processadas
+worker-2-1  | 2026/11/06 22:27:42 worker worker-2: 3274 requisicoes / 114091 medicoes processadas
+worker-1-1  | 2026/11/06 22:26:50 worker worker-1: 2042 requisicoes / 72121 medicoes processadas
+worker-1-1  | 2026/11/06 22:27:00 worker worker-1: 2335 requisicoes / 82806 medicoes processadas
+worker-1-1  | 2026/11/06 22:27:10 worker worker-1: 2853 requisicoes / 100385 medicoes processadas
+worker-1-1  | 2026/11/06 22:27:20 worker worker-1: 3015 requisicoes / 105973 medicoes processadas
+worker-1-1  | 2026/11/06 22:27:30 worker worker-1: 3176 requisicoes / 111667 medicoes processadas
+redis-1     | 1:C 06 Nov 2026 22:25:18.572 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+api-6-1     | 2026/11/06 22:25:30 api ouvindo em :8080
+redis-1     | 1:C 06 Nov 2026 22:25:18.572 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1     | 1:C 06 Nov 2026 22:25:18.572 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1     | 1:C 06 Nov 2026 22:25:18.572 * Configuration loaded
+redis-1     | 1:M 06 Nov 2026 22:25:18.572 * Increased maximum number of open files to 10032 (it was originally set to 2048).
+redis-1     | 1:M 06 Nov 2026 22:25:18.572 * monotonic clock: POSIX clock_gettime
+redis-1     | 1:M 06 Nov 2026 22:25:18.573 * Running mode=standalone, port=6379.
+redis-1     | 1:M 06 Nov 2026 22:25:18.573 * Server initialized
+postgres-1  | The files belonging to this database system will be owned by user "postgres".
+api-2-1     | 2026/11/06 22:25:29 api ouvindo em :8080
+postgres-1  | This user must also own the server process.
+postgres-1  | 
+redis-1     | 1:M 06 Nov 2026 22:25:18.615 * Creating AOF base file appendonly.aof.1.base.rdb on server start
+api-3-1     | 2026/11/06 22:25:32 api ouvindo em :8080
+postgres-1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres-1  | The default database encoding has accordingly been set to "UTF8".
+postgres-1  | The default text search configuration will be set to "english".
+postgres-1  | 
+postgres-1  | Data page checksums are disabled.
+postgres-1  | 
+postgres-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres-1  | creating subdirectories ... ok
+postgres-1  | selecting dynamic shared memory implementation ... posix
+postgres-1  | selecting default max_connections ... 100
+postgres-1  | selecting default shared_buffers ... 128MB
+postgres-1  | selecting default time zone ... UTC
+postgres-1  | creating configuration files ... ok
+postgres-1  | running bootstrap script ... ok
+postgres-1  | sh: locale: not found
+redis-1     | 1:M 06 Nov 2026 22:25:18.618 * Creating AOF incr file appendonly.aof.1.incr.aof on server start
+gateway-1   | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+postgres-1  | 2026-11-06 22:25:21.051 UTC [41] WARNING:  no usable system locales were found
+gateway-1   | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+gateway-1   | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+gateway-1   | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+gateway-1   | 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+gateway-1   | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+gateway-1   | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+postgres-1  | performing post-bootstrap initialization ... ok
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1  | syncing data to disk ... ok
+postgres-1  | 
+postgres-1  | 
+postgres-1  | Success. You can now start the database server using:
+postgres-1  | 
+postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres-1  | 
+api-1-1     | 2026/11/06 22:25:32 api ouvindo em :8080
+redis-1     | 1:M 06 Nov 2026 22:25:18.618 * Ready to accept connections tcp
+worker-1-1  | 2026/11/06 22:27:40 worker worker-1: 3336 requisicoes / 117060 medicoes processadas
+postgres-1  | waiting for server to start....2026-11-06 22:25:24.963 UTC [71] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+api-4-1     | 2026/11/06 22:25:31 api ouvindo em :8080
+postgres-1  | 2026-11-06 22:25:24.964 UTC [71] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 22:25:24.970 UTC [74] LOG:  database system was shut down at 2026-11-06 22:25:23 UTC
+postgres-1  | 2026-11-06 22:25:25.050 UTC [71] LOG:  database system is ready to accept connections
+api-5-1     | 2026/11/06 22:25:31 api ouvindo em :8080
+postgres-1  |  done
+postgres-1  | server started
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/01-esquema.sql
+postgres-1  | CREATE TABLE
+postgres-1  | CREATE TABLE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | waiting for server to shut down....2026-11-06 22:25:25.852 UTC [71] LOG:  received fast shutdown request
+postgres-1  | 2026-11-06 22:25:25.853 UTC [71] LOG:  aborting any active transactions
+postgres-1  | 2026-11-06 22:25:25.854 UTC [71] LOG:  background worker "logical replication launcher" (PID 77) exited with exit code 1
+postgres-1  | 2026-11-06 22:25:25.854 UTC [72] LOG:  shutting down
+postgres-1  | 2026-11-06 22:25:25.855 UTC [72] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-11-06 22:25:26.204 UTC [72] LOG:  checkpoint complete: wrote 935 buffers (7.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.098 s, sync=0.247 s, total=0.350 s; sync files=311, longest=0.002 s, average=0.001 s; distance=1725 kB, estimate=1725 kB; lsn=0/16A67D8, redo lsn=0/16A67D8
+postgres-1  | 2026-11-06 22:25:26.248 UTC [71] LOG:  database system is shut down
+postgres-1  |  done
+gateway-1   | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-11-06 22:25:26.266 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+postgres-1  | 2026-11-06 22:25:26.266 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-11-06 22:25:26.266 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-11-06 22:25:26.348 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-11-06 22:25:26.351 UTC [89] LOG:  database system was shut down at 2026-11-06 22:25:26 UTC
+postgres-1  | 2026-11-06 22:25:26.355 UTC [1] LOG:  database system is ready to accept connections
+gateway-1   | /docker-entrypoint.sh: Configuration complete; ready for start up
+gateway-1   | 2026/11/06 22:28:18 [warn] 30#30: *383 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 172.18.0.3, server: , request: "GET /audit/medidas?limit=1000&cursor= HTTP/1.1", upstream: "http://172.19.0.4:8080/audit/medidas?limit=1000&cursor=", host: "aps-app:8080"
